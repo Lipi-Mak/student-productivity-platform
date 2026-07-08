@@ -1,3 +1,18 @@
+# Virtual Environment
 venv/
+
+# Python cache
 __pycache__/
-*.pyc
+*.py[cod]
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Flask
+instance/
+
+# Environment variables
+.env
