@@ -1,2 +1,4 @@
+import os
+
 class Config:
-    SECRET_KEY = "your_secret_key"
+    SECRET_KEY = "studentproductivitysecret"
