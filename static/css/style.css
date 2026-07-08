@@ -1,0 +1,44 @@
+body {
+    background-color: #f8fafc;
+}
+
+
+.sidebar {
+    background-color: white;
+    min-height: calc(100vh - 56px);
+}
+
+
+.sidebar .nav-link {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+
+.sidebar .nav-link:hover {
+    background-color: #e8f0ff;
+    border-radius: 10px;
+}
+
+
+
+.dashboard-card {
+
+    background-color: white;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    height: 100%;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+}
+
+
+.dashboard-card h5 {
+
+    margin-bottom: 15px;
+
+}
