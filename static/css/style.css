@@ -42,3 +42,43 @@ body {
     margin-bottom: 15px;
 
 }
+body {
+    background: #f5f7fb;
+}
+
+
+.sidebar {
+    min-height: calc(100vh - 56px);
+    background: #ffffff;
+    border-right: 1px solid #ddd;
+}
+
+
+.sidebar .nav-link {
+    color: #333;
+    margin-bottom: 8px;
+}
+
+
+.sidebar .nav-link:hover {
+    background: #e9f1ff;
+    border-radius: 8px;
+}
+
+
+.dashboard-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+
+.auth-card {
+    max-width: 450px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
