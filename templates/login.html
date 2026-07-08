@@ -1,31 +1,56 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% block title %}Identity Authentication Login | CampusFlow{% endblock %}
 
-{% block content %}
+{% block layout_shell %}
+<div class="container-fluid p-0">
+    <div class="row g-0 auth-wrapper">
+        <div class="col-lg-5 d-none d-lg-flex auth-sidebar-art text-center">
+            <div style="max-width: 360px;">
+                <div class="d-flex align-items-center justify-content-center gap-2 mb-3" style="color: var(--primary-teal);">
+                    <i class="bi bi-mortarboard-fill fs-1"></i>
+                    <span class="fw-extrabold h1 mb-0" style="font-weight:800; letter-spacing:-0.04em;">CampusFlow</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Welcome back to your workspace</h4>
+                <p class="text-muted">A beautiful data metrics orchestration space optimized for high-performance students tracking tasks seamlessly.</p>
+            </div>
+        </div>
 
-<div class="auth-card">
+        <div class="col-lg-7 auth-form-container">
+            <div class="auth-card">
+                <div class="mb-4">
+                    <h2 class="fw-bold text-dark style-tracking-tight mb-1">Welcome Back!</h2>
+                    <p class="text-muted">Provide configuration values to safely sign back in</p>
+                </div>
 
-<h2>Login</h2>
+                <form action="#" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-dark">Email Pointer String Field</label>
+                        <input type="email" class="form-control form-input-premium" placeholder="name@university.edu" required>
+                    </div>
 
-<form>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label class="form-label small fw-semibold text-dark mb-0">Password Phrase</label>
+                            <a href="{{ url_for('forgot_password') }}" class="small text-decoration-none fw-medium" style="color: var(--primary-teal)">Forgot Password?</a>
+                        </div>
+                        <input type="password" class="form-control form-input-premium" placeholder="••••••••" required>
+                    </div>
 
-<div class="mb-3">
-<label>Email</label>
-<input class="form-control" type="email">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label small text-muted" for="rememberMe">Remember Session</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-premium-teal w-100 mb-3">Sign In Securely</button>
+
+                    <div class="text-center small text-muted">
+                        Don't have platform account credentials? <a href="{{ url_for('register') }}" class="text-decoration-none fw-semibold" style="color: var(--primary-teal)">Register Now</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-<div class="mb-3">
-<label>Password</label>
-<input class="form-control" type="password">
-</div>
-
-
-<button class="btn btn-primary">
-Login
-</button>
-
-</form>
-
-</div>
-
 {% endblock %}

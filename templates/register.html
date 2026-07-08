@@ -1,39 +1,63 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% block title %}Create Account | CampusFlow{% endblock %}
 
-{% block content %}
+{% block layout_shell %}
+<div class="container-fluid p-0">
+    <div class="row g-0 auth-wrapper">
+        <div class="col-lg-5 d-none d-lg-flex auth-sidebar-art text-center">
+            <div style="max-width: 360px;">
+                <div class="d-flex align-items-center justify-content-center gap-2 mb-3" style="color: var(--primary-teal)">
+                    <i class="bi bi-mortarboard-fill fs-1"></i>
+                    <span class="fw-extrabold h1 mb-0" style="font-weight:800; letter-spacing:-0.04em;">CampusFlow</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Elevate Academic Excellence</h4>
+                <p class="text-muted">An elegant, unified system engine layer designed to structure your tracking profiles, task vectors, and curriculum pathways.</p>
+            </div>
+        </div>
 
-<div class="auth-card">
+        <div class="col-lg-7 auth-form-container">
+            <div class="auth-card">
+                <div class="mb-4">
+                    <h2 class="fw-bold text-dark style-tracking-tight mb-1">Get Started Today</h2>
+                    <p class="text-muted">Create your structural platform access context setup profiles.</p>
+                </div>
 
-<h2>Create Account</h2>
+                <form action="#" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-dark">Full Name</label>
+                        <input type="text" class="form-control form-input-premium" placeholder="e.g. Khushi Sharma" required>
+                    </div>
 
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-dark">University Email Address</label>
+                        <input type="email" class="form-control form-input-premium" placeholder="name@university.edu" required>
+                    </div>
 
-<form>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-dark">Password Token Key</label>
+                        <input type="password" class="form-control form-input-premium" placeholder="••••••••" required>
+                    </div>
 
-<div class="mb-3">
-<label>Name</label>
-<input class="form-control">
+                    <div class="mb-4">
+                        <label class="form-label small fw-semibold text-dark">Confirm Secret Token String</label>
+                        <input type="password" class="form-control form-input-premium" placeholder="••••••••" required>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                        <label class="form-check-label small text-muted" for="termsCheck">
+                            I authorize operational metric binding terms configurations.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-premium-teal w-100 mb-3">Register Base Instance</button>
+
+                    <div class="text-center small text-muted">
+                        Already have an account access point? <a href="{{ url_for('login') }}" class="text-decoration-none fw-semibold" style="color: var(--primary-teal)">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-<div class="mb-3">
-<label>Email</label>
-<input class="form-control" type="email">
-</div>
-
-
-<div class="mb-3">
-<label>Password</label>
-<input class="form-control" type="password">
-</div>
-
-
-<button class="btn btn-primary">
-Register
-</button>
-
-
-</form>
-
-</div>
-
 {% endblock %}
