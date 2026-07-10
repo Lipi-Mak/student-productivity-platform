@@ -1,13 +1,13 @@
 /* ==========================================================================
-   1. Brand Identity & Typography Layer
+   1. Typography & Brand Variables Update
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Quicksand:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Manrope:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap');
 
 :root {
     --brand-teal: #14919B;
     --brand-teal-dark: #0E6870;
     --brand-teal-light: #E6F7F8;
-    --bg-surface: #F8FAFC;
+    --bg-premium-surface: #F7F9FC;
     --card-surface: #FFFFFF;
     --text-primary: #1E293B;
     --text-secondary: #64748B;
@@ -18,276 +18,160 @@
     --danger: #EF4444;
     --font-heading: 'Comfortaa', display;
     --font-body: 'Quicksand', sans-serif;
-}
-
-body {
-    font-family: var(--font-body);
-    background-color: var(--bg-surface);
-    color: var(--text-primary);
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-}
-
-h1, h2, h3, h4, h5, h6, .sidebar-brand {
-    font-family: var(--font-heading);
-    font-weight: 700;
+    --font-saas: 'Manrope', sans-serif;
 }
 
 /* ==========================================================================
-   2. Absolute No-Scroll Fixed App Shell Layout 
+   2. Auth Layout Container (No-Scroll Viewport Alignment)
    ========================================================================== */
-#app-layout {
-    display: flex;
+.auth-viewport-wrapper {
+    font-family: var(--font-saas);
+    background: radial-gradient(circle at top right, rgba(20, 145, 155, 0.06) 0%, var(--bg-premium-surface) 100%);
+    min-height: 100vh;
     width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-}
-
-#main-sidebar {
-    width: 240px;
-    background-color: #FFFFFF;
-    border-right: 1px solid var(--border-subtle);
     display: flex;
-    flex-direction: column;
-    height: 100%;
-    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
 }
 
-.sidebar-brand {
-    padding: 1.25rem;
-    font-size: 1.2rem;
+.auth-saas-card {
+    background-color: var(--card-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px; /* Custom 18-22px SaaS Radius Curve */
+    box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.04), 0 10px 10px -5px rgba(15, 23, 42, 0.02);
+    width: 100%;
+    max-width: 460px;
+    padding: 2.5rem 2.25rem;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.auth-saas-card:hover {
+    transform: translateY(-2px);
+}
+
+.auth-brand-title {
+    font-family: var(--font-heading);
     color: var(--brand-teal);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    transition: color 0.2s ease;
+    font-size: 1.6rem;
+    letter-spacing: -0.02em;
 }
 
-.sidebar-brand:hover {
-    color: var(--brand-teal-dark);
+.auth-heading-main {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
 }
 
-.sidebar-menu-list {
-    padding: 0.25rem 0.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-    overflow-y: auto;
-    flex-grow: 1;
-}
-
-.sidebar-link {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.6rem 0.85rem;
-    color: var(--text-secondary);
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-decoration: none;
-    border-radius: 8px;
+/* ==========================================================================
+   3. Premium Interactive Forms Architecture
+   ========================================================================== */
+.form-saas-input {
+    border: 1px solid #CBD5E1;
+    border-radius: 12px;
+    padding: 0.65rem 1rem;
+    font-size: 0.925rem;
+    font-family: var(--font-saas);
+    color: var(--text-primary);
     transition: all 0.2s ease-in-out;
 }
 
-.sidebar-link:hover {
-    background-color: var(--brand-teal-light);
-    color: var(--brand-teal);
-    transform: translateX(3px);
-}
-
-.sidebar-link.active {
-    background-color: var(--brand-teal);
-    color: #FFFFFF;
-}
-
-#content-space-wrapper {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: calc(100% - 240px);
-}
-
-.top-navbar-premium {
-    background-color: #FFFFFF;
-    border-bottom: 1px solid var(--border-subtle);
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1.5rem;
-    flex-shrink: 0;
-}
-
-.premium-search-box {
-    position: relative;
-    width: 300px;
-}
-
-.premium-search-box i {
-    position: absolute;
-    left: 0.85rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-secondary);
-}
-
-.premium-search-box input {
-    width: 100%;
-    background-color: #F1F5F9;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    padding: 0.4rem 1rem 0.4rem 2.25rem;
-    font-size: 0.85rem;
-    transition: all 0.2s ease;
-}
-
-.premium-search-box input:focus {
-    background-color: #FFFFFF;
+.form-saas-input:focus {
     border-color: var(--brand-teal);
-    box-shadow: 0 0 0 3px rgba(20, 145, 155, 0.15);
+    box-shadow: 0 0 0 4px rgba(20, 145, 155, 0.12);
     outline: none;
 }
 
-/* ==========================================================================
-   3. Viewport Constrained Dashboard Components
-   ========================================================================== */
-.scrollable-content-area {
-    padding: 1.25rem;
-    height: calc(100% - 60px);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+.input-password-wrapper {
+    position: relative;
 }
 
-.hero-welcome-banner {
+.password-toggle-trigger {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.password-toggle-trigger:hover {
+    color: var(--brand-teal);
+}
+
+/* ==========================================================================
+   4. Action Component Triggers (Micro-Lifts & Transitions)
+   ========================================================================== */
+.btn-saas-primary {
+    background-color: var(--brand-teal);
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 12px;
+    padding: 0.7rem 1.5rem;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-saas-primary:hover, .btn-saas-primary:focus {
+    background-color: var(--brand-teal-dark);
+    color: #FFFFFF;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(20, 145, 155, 0.2);
+}
+
+.btn-saas-oauth {
     background-color: #FFFFFF;
-    border: 1px solid var(--border-subtle);
-    border-radius: 12px;
-    padding: 1rem 1.25rem;
-    flex-shrink: 0;
-}
-
-.hero-welcome-banner h2 {
-    font-size: 1.35rem;
     color: var(--text-primary);
-}
-
-.dashboard-grid-container {
-    display: grid;
-    grid-template-columns: repeat(12, 11fr);
-    gap: 1rem;
-    flex-grow: 1;
-    min-height: 0; /* Prevents auto-expansion breakouts */
-}
-
-.left-main-cells {
-    grid-column: span 8;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 1rem;
-    min-height: 0;
-}
-
-.right-sidebar-cells {
-    grid-column: span 4;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    min-height: 0;
-}
-
-/* ==========================================================================
-   4. Micro-Sized Interactive Component Cards
-   ========================================================================== */
-.premium-card {
-    background-color: var(--card-surface);
+    font-weight: 500;
+    font-size: 0.9rem;
     border: 1px solid var(--border-subtle);
     border-radius: 12px;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 0;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.premium-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(20, 145, 155, 0.05);
-    border-color: var(--brand-teal);
-}
-
-.premium-card-header {
+    padding: 0.65rem 1rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-    flex-shrink: 0;
-}
-
-.premium-card-title {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin: 0;
-}
-
-.premium-card-body-content {
-    flex-grow: 1;
-    overflow-y: auto;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
 }
 
-/* Seamless Progress Track Layer */
-.progress-track-premium {
-    height: 6px;
-    background-color: #E2E8F0;
-    border-radius: 10px;
-    overflow: hidden;
+.btn-saas-oauth:hover {
+    background-color: #F8FAFC;
+    border-color: #CBD5E1;
+    transform: translateY(-0.5px);
 }
 
-.progress-bar-fill {
-    background: linear-gradient(90deg, var(--brand-teal) 0%, #2DD4BF 100%);
-    border-radius: 10px;
-    height: 100%;
+/* Structural Decoratives */
+.saas-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin: 1.5rem 0;
 }
 
-.timetable-timeline-node {
-    border-left: 3px solid var(--brand-teal);
-    padding-left: 0.75rem;
-    margin-bottom: 0.5rem;
+.saas-divider::before, .saas-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
-.timetable-timeline-node:last-child {
-    margin-bottom: 0;
+.saas-divider:not(:empty)::before { margin-right: .75rem; }
+.saas-divider:not(:empty)::after { margin-left: .75rem; }
+
+.auth-link-premium {
+    color: var(--brand-teal);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
 }
 
-.premium-badge-subtle {
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 0.2rem 0.5rem;
-    border-radius: 6px;
-}
-
-.premium-sticky-widget {
-    background-color: #FFFDE7;
-    border: 1px solid #FFF59D;
-    border-radius: 8px;
-    padding: 0.75rem;
-    color: #5D4037;
-    overflow-y: auto;
-    flex-grow: 1;
-}
-
-/* Form Interactivity Tweaks */
-.form-check-input:checked {
-    background-color: var(--brand-teal);
-    border-color: var(--brand-teal);
+.auth-link-premium:hover {
+    color: var(--brand-teal-dark);
+    text-decoration: underline;
 }
