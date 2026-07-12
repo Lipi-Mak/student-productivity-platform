@@ -1,3 +1,4 @@
+
 /* Import the Exact Geometric Font matching Image 2 */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
@@ -5,6 +6,12 @@
 body, html, .dashboard-grid, h2, h3, h5, span, div, p, a, label, input {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
     letter-spacing: -0.01em;
+
+/* Import Geometric Font to match Image 2 */
+
+body, html, .dashboard-grid, h2, h5, span, div, p, a {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+
 }
 
 /* Base Component Rules */
@@ -14,6 +21,7 @@ body, html, .dashboard-grid, h2, h3, h5, span, div, p, a, label, input {
     border-radius: 12px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.01);
 }
+
 
 /* Card Titles Thickness & Sizing */
 .dashboard-card h5 {
@@ -36,6 +44,8 @@ body, html, .dashboard-grid, h2, h3, h5, span, div, p, a, label, input {
     font-weight: 600 !important;
 }
 
+
+origin/main
 /* Rounded Pill Progress Bars matching Image 2 */
 .progress {
     height: 6px !important;
