@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* Import the Exact Geometric Font matching Image 2 */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
@@ -6,13 +5,6 @@
 body, html, .dashboard-grid, h2, h3, h5, span, div, p, a, label, input {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
     letter-spacing: -0.01em;
-=======
-/* Import Geometric Font to match Image 2 */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-
-body, html, .dashboard-grid, h2, h5, span, div, p, a {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
->>>>>>> origin/main
 }
 
 /* Base Component Rules */
@@ -23,7 +15,6 @@ body, html, .dashboard-grid, h2, h5, span, div, p, a {
     box-shadow: 0 1px 3px rgba(0,0,0,0.01);
 }
 
-<<<<<<< HEAD
 /* Card Titles Thickness & Sizing */
 .dashboard-card h5 {
     font-weight: 600 !important;
@@ -45,8 +36,6 @@ body, html, .dashboard-grid, h2, h5, span, div, p, a {
     font-weight: 600 !important;
 }
 
-=======
->>>>>>> origin/main
 /* Rounded Pill Progress Bars matching Image 2 */
 .progress {
     height: 6px !important;
@@ -73,9 +62,28 @@ body, html, .dashboard-grid, h2, h5, span, div, p, a {
     color: #12A5B5 !important;
 }
 
-.attendance-card { margin-bottom: 4px; }
-.timetable-card { padding-top: 1.8rem !important; padding-bottom: 2.2rem !important; }
-.assignment-card { margin-bottom: -4px; }
-.planner-card { padding-bottom: 1.5rem !important; }
-.goals-card { padding-bottom: 2.5rem !important; }
-.notes-card { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+.attendance-card { 
+    margin-bottom: 4px; 
+}
+
+.timetable-card { 
+    padding-top: 1.8rem !important; 
+    padding-bottom: 2.2rem !important; 
+}
+
+.assignment-card { 
+    margin-bottom: -4px; 
+}
+
+.planner-card { 
+    padding-bottom: 1.5rem !important; 
+}
+
+.goals-card { 
+    padding-bottom: 2.5rem !important; 
+}
+
+.notes-card { 
+    padding-top: 1rem !important; 
+    padding-bottom: 1rem !important; 
+}
