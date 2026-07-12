@@ -34,22 +34,8 @@ Login - StudentOS
             </p>
 
         </div>
-
-        <form action="#" method="POST">
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Email Address
-                </label>
-
-                <input
-                    type="email"
-                    class="form-control"
-                    name="email"
-                    placeholder="name@university.edu"
-                    required>
-
+  
+        <form action="{{ url_for('login') }}" method="POST">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
 
@@ -58,13 +44,11 @@ Login - StudentOS
             {% for message in messages %}
                 {{ message }}
             {% endfor %}
-
         </div>
 
         {% endif %}
         {% endwith %}
         
-        <form action="{{ url_for('login') }}" method="POST">
             <div class="mb-3">
                 <label class="form-label">Email address</label>
                 <input
@@ -91,13 +75,6 @@ Login - StudentOS
                 </div>
 
                 <div class="input-group">
-
-                    <input
-                        type="password"
-                        class="form-control has-password-icon"
-                        name="password"
-                        placeholder="••••••••"
-                        required>
 
                     <span class="input-group-text">
                         <i class="bi bi-eye"></i>
