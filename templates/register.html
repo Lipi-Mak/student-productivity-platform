@@ -1,3 +1,4 @@
+```html
 {% extends "base.html" %}
 
 {% block title %}
@@ -35,7 +36,25 @@ Register - StudentOS
 
         </div>
 
-        <form action="#" method="POST">
+
+        <form action="{{ url_for('register') }}" method="POST">
+
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+
+            <div class="alert alert-danger">
+
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+            {% endwith %}
+
+
 
             <div class="mb-3">
 
@@ -52,6 +71,8 @@ Register - StudentOS
 
             </div>
 
+
+
             <div class="mb-3">
 
                 <label class="form-label">
@@ -65,41 +86,9 @@ Register - StudentOS
                     placeholder="name@university.edu"
                     required>
 
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-
-        <div class="alert alert-danger">
-
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-
-        </div>
-
-        {% endif %}
-        {% endwith %}
-        <form action="{{ url_for('register') }}" method="POST">
-            <div class="mb-3">
-                <label class="form-label">Username</label>
-                <input
-                    type="text"
-                    name="username"
-                    class="form-control"
-                    placeholder="e.g. khushi_shitole"
-                    required
-                >
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Email address</label>
-                <input
-                    type="email"
-                    name="email"
-                    class="form-control"
-                    placeholder="name@university.edu"
-                    required
-                >
-            </div>
+
 
             <div class="mb-3">
 
@@ -120,17 +109,11 @@ Register - StudentOS
                         <i class="bi bi-eye"></i>
                     </span>
 
-                    <input
-                        type="password"
-                        name="password"
-                        class="form-control has-password-icon"
-                        placeholder="••••••••"
-                        required
-                    >
-                    <span class="input-group-text"><i class="bi bi-eye"></i></span>
                 </div>
 
             </div>
+
+
 
             <div class="mb-4">
 
@@ -151,17 +134,11 @@ Register - StudentOS
                         <i class="bi bi-eye"></i>
                     </span>
 
-                    <input
-                        type="password"
-                        name="confirm_password"
-                        class="form-control has-password-icon"
-                        placeholder="••••••••"
-                        required
-                    >
-                    <span class="input-group-text"><i class="bi bi-eye"></i></span>
                 </div>
 
             </div>
+
+
 
             <button
                 type="submit"
@@ -171,7 +148,10 @@ Register - StudentOS
 
             </button>
 
+
         </form>
+
+
 
         <div class="text-center mt-4">
 
@@ -180,17 +160,17 @@ Register - StudentOS
                 Already have an account?
 
                 <a href="{{ url_for('login') }}" class="bottom-link">
-
                     Login
-
                 </a>
 
             </p>
 
         </div>
 
+
     </div>
 
 </div>
 
 {% endblock %}
+```

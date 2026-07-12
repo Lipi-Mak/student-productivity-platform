@@ -1,3 +1,4 @@
+```html
 {% extends "base.html" %}
 
 {% block title %}
@@ -25,42 +26,60 @@ Login - StudentOS
                 Student Productivity Hub
             </div>
 
+
             <h3 class="auth-title">
                 Welcome Back!
             </h3>
 
+
             <p class="auth-subtitle">
-                Login to continue managing your student environment execution workspace.
+                Login to continue managing your student productivity workspace.
             </p>
 
         </div>
-  
+
+
+
         <form action="{{ url_for('login') }}" method="POST">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
 
-        <div class="alert alert-danger">
 
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-        </div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
 
-        {% endif %}
-        {% endwith %}
-        
-            <div class="mb-3">
-                <label class="form-label">Email address</label>
-                <input
-                    type="email"
-                    name="email"
-                    class="form-control"
-                    placeholder="name@university.edu"
-                    required
-                >
+            <div class="alert alert-danger">
+
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+
             </div>
 
+            {% endif %}
+            {% endwith %}
+
+
+
             <div class="mb-3">
+
+                <label class="form-label">
+                    Email Address
+                </label>
+
+
+                <input
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    placeholder="name@university.edu"
+                    required>
+
+            </div>
+
+
+
+
+            <div class="mb-3">
+
 
                 <div class="d-flex justify-content-between align-items-center mb-1">
 
@@ -68,36 +87,49 @@ Login - StudentOS
                         Password
                     </label>
 
+
                     <a href="#" class="forgot-link">
                         Forgot Password?
                     </a>
 
+
                 </div>
 
+
+
                 <div class="input-group">
+
+
+                    <input
+                        type="password"
+                        class="form-control has-password-icon"
+                        name="password"
+                        placeholder="••••••••"
+                        required>
+
 
                     <span class="input-group-text">
                         <i class="bi bi-eye"></i>
                     </span>
 
-                    <input
-                        type="password"
-                        name="password"
-                        class="form-control has-password-icon"
-                        placeholder="••••••••"
-                        required
-                    >
-                    <span class="input-group-text"><i class="bi bi-eye"></i></span>
+
                 </div>
+
 
             </div>
 
+
+
+
+
             <div class="form-check mb-4">
+
 
                 <input
                     class="form-check-input"
                     type="checkbox"
                     id="rememberMe">
+
 
                 <label
                     class="form-check-label"
@@ -107,7 +139,12 @@ Login - StudentOS
 
                 </label>
 
+
             </div>
+
+
+
+
 
             <button
                 type="submit"
@@ -117,13 +154,20 @@ Login - StudentOS
 
             </button>
 
+
         </form>
 
+
+
+
+
         <div class="text-center mt-4">
+
 
             <p class="small text-muted mb-0">
 
                 Don't have an account?
+
 
                 <a href="{{ url_for('register') }}" class="bottom-link">
 
@@ -131,12 +175,18 @@ Login - StudentOS
 
                 </a>
 
+
             </p>
+
 
         </div>
 
+
     </div>
+
 
 </div>
 
+
 {% endblock %}
+```
