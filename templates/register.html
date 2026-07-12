@@ -1,5 +1,4 @@
-```html
-{% extends "base.html" %}
+{% extends "auth_base.html" %}
 
 {% block title %}
 Register - StudentOS
@@ -9,7 +8,7 @@ Register - StudentOS
 <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
 {% endblock %}
 
-{% block page_layout %}
+{% block content %}
 
 <div class="auth-page">
 
