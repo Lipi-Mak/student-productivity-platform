@@ -1,0 +1,35 @@
+/* Login & Registration Framework Styles */
+.auth-body-frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: var(--bg-system);
+}
+
+.auth-card-container {
+    background-color: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.auth-branding-title {
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.auth-input-field {
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+}
+
+.auth-input-field:focus {
+    border-color: var(--primary-teal);
+    box-shadow: 0 0 0 3px rgba(33, 150, 163, 0.15);
+}

@@ -3,79 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Account | StudentOS</title>
+    <title>Register - StudentOS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
+    
+    <style>
+        body {
+            background-color: #F6F8FB;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .auth-card {
+            background: #ffffff;
+            border: 1px solid #E7EDF3;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        }
+        .brand-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2196A3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .sub-badge {
+            background: #ffffff;
+            border: 1px solid #E7EDF3;
+            color: #6B7280;
+            border-radius: 20px;
+            padding: 4px 16px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-top: 8px;
+        }
+        .btn-teal {
+            background-color: #2196A3;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-teal:hover {
+            background-color: #1A7F8B;
+            color: #ffffff;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #1F2937;
+            font-size: 0.9rem;
+        }
+        .form-control {
+            border: 1px solid #D1D5DB;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 0.95rem;
+            color: #1F2937;
+        }
+        .form-control::placeholder {
+            color: #9CA3AF;
+        }
+        .form-control:focus {
+            border-color: #2196A3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 163, 0.15);
+        }
+        .input-group-text {
+            background: transparent;
+            border: 1px solid #D1D5DB;
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+            color: #6B7280;
+            cursor: pointer;
+        }
+        .has-password-icon {
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
 
-    <div class="auth-viewport-wrapper">
-        <div class="auth-saas-card">
+    <div class="auth-card">
+        <div class="text-center mb-4">
+            <a href="#" class="brand-logo">
+                <i class="bi bi-mortarboard-fill"></i> StudentOS
+            </a>
+            <div class="sub-badge">Student Productivity Hub</div>
+            <h3 class="fw-bold text-dark mt-4 mb-1" style="font-size: 1.6rem;">Create Your Account</h3>
+            <p class="text-muted small">Build your secure, modern platform tracking space.</p>
+        </div>
+
+        <form action="#" method="POST">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" placeholder="e.g. khushi_shitole" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email address</label>
+                <input type="email" class="form-control" placeholder="name@university.edu" required>
+            </div>
             
-            <div class="text-center mb-4">
-                <div class="auth-brand-title d-flex align-items-center justify-content-center gap-2 mb-1">
-                    <i class="bi bi-mortarboard-fill"></i>
-                    <span>StudentOS</span>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control has-password-icon" placeholder="••••••••" required>
+                    <span class="input-group-text"><i class="bi bi-eye"></i></span>
                 </div>
-                <span class="badge bg-light border text-secondary rounded-pill px-3 py-1.5" style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em;">Student Productivity Hub</span>
             </div>
 
-            <div class="mb-4 text-center">
-                <h3 class="auth-heading-main mb-1">Create Your Account</h3>
-                <p class="text-secondary small mb-0">Build your secure, modern platform tracking space.</p>
+            <div class="mb-4">
+                <label class="form-label">Confirm Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control has-password-icon" placeholder="••••••••" required>
+                    <span class="input-group-text"><i class="bi bi-eye"></i></span>
+                </div>
             </div>
+            
+            <button type="submit" class="btn btn-teal w-100 py-2.5">Create Account</button>
+        </form>
 
-            <form action="#" method="POST" autocomplete="off">
-                
-                <div class="mb-3">
-                    <label class="form-label small fw-semibold text-dark mb-1">Username</label>
-                    <input type="text" class="form-control form-saas-input" placeholder="e.g. your name_last name" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label small fw-semibold text-dark mb-1">Email address</label>
-                    <input type="email" class="form-control form-saas-input" placeholder="name@university.edu" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label small fw-semibold text-dark mb-1">Password</label>
-                    <div class="input-password-wrapper">
-                        <input type="password" class="form-control form-saas-input w-100" placeholder="••••••••" required>
-                        <i class="bi bi-eye password-toggle-trigger"></i>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label small fw-semibold text-dark mb-1">Confirm Password</label>
-                    <div class="input-password-wrapper">
-                        <input type="password" class="form-control form-saas-input w-100" placeholder="••••••••" required>
-                        <i class="bi bi-eye password-toggle-trigger"></i>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-saas-primary w-100 mb-3">Create Account</button>
-
-                <div class="saas-divider">OR</div>
-
-                <button type="button" class="btn btn-saas-oauth w-100 mb-4">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.85z" fill="#FBBC05"/>
-                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.85c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                    </svg>
-                    <span>Continue with Google</span>
-                </button>
-
-                <div class="text-center small text-secondary">
-                    Already have an account? <a href="/login.html" class="auth-link-premium ms-1">Login</a>
-                </div>
-
-            </form>
+        <div class="text-center mt-4">
+            <p class="small text-muted mb-0">Already have an account? <a href="{{ url_for('login') }}" class="fw-semibold text-decoration-none" style="color: #2196A3;">Login</a></p>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

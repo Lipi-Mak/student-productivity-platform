@@ -1,177 +1,135 @@
-/* ==========================================================================
-   1. Typography & Brand Variables Update
-   ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Manrope:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap');
-
+/* Core Styling Tokens */
 :root {
-    --brand-teal: #14919B;
-    --brand-teal-dark: #0E6870;
-    --brand-teal-light: #E6F7F8;
-    --bg-premium-surface: #F7F9FC;
-    --card-surface: #FFFFFF;
-    --text-primary: #1E293B;
-    --text-secondary: #64748B;
-    --border-subtle: #E2E8F0;
-    
-    --success: #10B981;
-    --warning: #F59E0B;
-    --danger: #EF4444;
-    --font-heading: 'Comfortaa', display;
-    --font-body: 'Quicksand', sans-serif;
-    --font-saas: 'Manrope', sans-serif;
+    --bg-system: #F6F8FB;
+    --primary-teal: #2196A3;
+    --primary-teal-hover: #1A7F8B;
+    --border-subtle: #E7EDF3;
+    --text-main: #1F2937;
+    --text-muted: #6B7280;
+    --sidebar-width: 250px;
+    --navbar-height: 70px;
 }
 
-/* ==========================================================================
-   2. Auth Layout Container (No-Scroll Viewport Alignment)
-   ========================================================================== */
-.auth-viewport-wrapper {
-    font-family: var(--font-saas);
-    background: radial-gradient(circle at top right, rgba(20, 145, 155, 0.06) 0%, var(--bg-premium-surface) 100%);
+body {
+    background-color: var(--bg-system);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+}
+
+.text-teal { color: var(--primary-teal) !important; }
+.btn-teal-action {
+    background-color: var(--primary-teal);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+.btn-teal-action:hover {
+    background-color: var(--primary-teal-hover);
+    color: #ffffff;
+}
+
+/* Master Layout Framework */
+#app-layout {
+    display: flex;
     min-height: 100vh;
-    width: 100vw;
+}
+
+#main-sidebar {
+    width: var(--sidebar-width);
+    background-color: #ffffff;
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+}
+
+.sidebar-brand {
+    padding: 24px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-teal);
+    text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
+    gap: 10px;
 }
 
-.auth-saas-card {
-    background-color: var(--card-surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: 20px; /* Custom 18-22px SaaS Radius Curve */
-    box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.04), 0 10px 10px -5px rgba(15, 23, 42, 0.02);
-    width: 100%;
-    max-width: 460px;
-    padding: 2.5rem 2.25rem;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+.sidebar-menu-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 12px;
+    gap: 4px;
 }
 
-.auth-saas-card:hover {
-    transform: translateY(-2px);
-}
-
-.auth-brand-title {
-    font-family: var(--font-heading);
-    color: var(--brand-teal);
-    font-size: 1.6rem;
-    letter-spacing: -0.02em;
-}
-
-.auth-heading-main {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: -0.03em;
-}
-
-/* ==========================================================================
-   3. Premium Interactive Forms Architecture
-   ========================================================================== */
-.form-saas-input {
-    border: 1px solid #CBD5E1;
-    border-radius: 12px;
-    padding: 0.65rem 1rem;
-    font-size: 0.925rem;
-    font-family: var(--font-saas);
-    color: var(--text-primary);
-    transition: all 0.2s ease-in-out;
-}
-
-.form-saas-input:focus {
-    border-color: var(--brand-teal);
-    box-shadow: 0 0 0 4px rgba(20, 145, 155, 0.12);
-    outline: none;
-}
-
-.input-password-wrapper {
-    position: relative;
-}
-
-.password-toggle-trigger {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.password-toggle-trigger:hover {
-    color: var(--brand-teal);
-}
-
-/* ==========================================================================
-   4. Action Component Triggers (Micro-Lifts & Transitions)
-   ========================================================================== */
-.btn-saas-primary {
-    background-color: var(--brand-teal);
-    color: #FFFFFF;
-    font-weight: 600;
-    font-size: 0.95rem;
-    border: none;
-    border-radius: 12px;
-    padding: 0.7rem 1.5rem;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.btn-saas-primary:hover, .btn-saas-primary:focus {
-    background-color: var(--brand-teal-dark);
-    color: #FFFFFF;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(20, 145, 155, 0.2);
-}
-
-.btn-saas-oauth {
-    background-color: #FFFFFF;
-    color: var(--text-primary);
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 8px;
     font-weight: 500;
     font-size: 0.9rem;
-    border: 1px solid var(--border-subtle);
-    border-radius: 12px;
-    padding: 0.65rem 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
     transition: all 0.2s ease;
 }
 
-.btn-saas-oauth:hover {
-    background-color: #F8FAFC;
-    border-color: #CBD5E1;
-    transform: translateY(-0.5px);
+.sidebar-link:hover {
+    background-color: #F3F4F6;
+    color: var(--text-main);
 }
 
-/* Structural Decoratives */
-.saas-divider {
+.sidebar-link.active {
+    background-color: var(--primary-teal);
+    color: #ffffff;
+}
+
+#content-space-wrapper {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.top-navbar-premium {
+    height: var(--navbar-height);
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-subtle);
     display: flex;
     align-items: center;
-    text-align: center;
-    color: var(--text-secondary);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    margin: 1.5rem 0;
+    justify-content: space-between;
+    padding: 0 32px;
+    position: sticky;
+    top: 0;
+    z-index: 90;
 }
 
-.saas-divider::before, .saas-divider::after {
-    content: '';
+.premium-search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #F3F4F6;
+    padding: 8px 16px;
+    border-radius: 8px;
+    width: 300px;
+}
+
+.premium-search-box input {
+    border: none;
+    background: transparent;
+    font-size: 0.875rem;
+    color: var(--text-main);
+    width: 100%;
+}
+
+.scrollable-content-area {
+    padding: 32px;
     flex: 1;
-    border-bottom: 1px solid var(--border-subtle);
-}
-
-.saas-divider:not(:empty)::before { margin-right: .75rem; }
-.saas-divider:not(:empty)::after { margin-left: .75rem; }
-
-.auth-link-premium {
-    color: var(--brand-teal);
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.2s;
-}
-
-.auth-link-premium:hover {
-    color: var(--brand-teal-dark);
-    text-decoration: underline;
+    overflow-y: auto;
 }
