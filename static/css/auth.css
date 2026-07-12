@@ -1,35 +1,199 @@
-/* Login & Registration Framework Styles */
-.auth-body-frame {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: var(--bg-system);
+/* ==========================================================
+                    AUTH PAGE
+========================================================== */
+
+.auth-page{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    background:#F6F8FB;
 }
 
-.auth-card-container {
-    background-color: #ffffff;
-    border: 1px solid var(--border-subtle);
-    border-radius: 16px;
-    padding: 40px;
-    width: 100%;
-    max-width: 440px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+/* ==========================================================
+                    AUTH CARD
+========================================================== */
+
+.auth-card{
+    width:100%;
+    max-width:440px;
+    background:#FFFFFF;
+    border:1px solid #E7EDF3;
+    border-radius:22px;
+    padding:42px;
+    box-shadow:0 8px 25px rgba(0,0,0,.04);
 }
 
-.auth-branding-title {
-    font-weight: 700;
-    color: var(--text-main);
+/* ==========================================================
+                    BRAND
+========================================================== */
+
+.brand-logo{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    text-decoration:none;
+    color:#2196A3;
+    font-size:1.9rem;
+    font-weight:800;
 }
 
-.auth-input-field {
-    border: 1px solid var(--border-subtle);
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 0.9rem;
+.brand-logo:hover{
+    color:#2196A3;
 }
 
-.auth-input-field:focus {
-    border-color: var(--primary-teal);
-    box-shadow: 0 0 0 3px rgba(33, 150, 163, 0.15);
+.sub-badge{
+    display:inline-block;
+    margin-top:10px;
+    padding:6px 18px;
+    border-radius:25px;
+    border:1px solid #E7EDF3;
+    color:#6B7280;
+    background:#FFFFFF;
+    font-size:.78rem;
+    font-weight:600;
+}
+
+/* ==========================================================
+                    HEADINGS
+========================================================== */
+
+.auth-title{
+    margin-top:30px;
+    margin-bottom:8px;
+    font-size:1.75rem;
+    font-weight:800;
+    color:#1F2937;
+}
+
+.auth-subtitle{
+    color:#6B7280;
+    font-size:.95rem;
+    line-height:1.6;
+}
+
+/* ==========================================================
+                    LABELS
+========================================================== */
+
+.form-label{
+    font-size:.9rem;
+    font-weight:700;
+    color:#1F2937;
+}
+
+/* ==========================================================
+                    INPUTS
+========================================================== */
+
+.form-control{
+    border:1px solid #D1D5DB;
+    border-radius:10px;
+    padding:12px 14px;
+    font-size:.95rem;
+    color:#1F2937;
+    transition:.25s;
+}
+
+.form-control::placeholder{
+    color:#9CA3AF;
+}
+
+.form-control:focus{
+    border-color:#2196A3;
+    box-shadow:0 0 0 3px rgba(33,150,163,.15);
+}
+
+.has-password-icon{
+    border-right:none;
+    border-radius:10px 0 0 10px;
+}
+
+.input-group-text{
+    background:#FFFFFF;
+    border:1px solid #D1D5DB;
+    border-left:none;
+    border-radius:0 10px 10px 0;
+    cursor:pointer;
+    color:#6B7280;
+}
+
+/* ==========================================================
+                    BUTTON
+========================================================== */
+
+.btn-teal{
+    background:#2196A3;
+    color:#FFFFFF;
+    border:none;
+    border-radius:12px;
+    padding:12px;
+    font-weight:700;
+    transition:.25s;
+}
+
+.btn-teal:hover{
+    background:#1A7F8B;
+    color:#FFFFFF;
+}
+
+/* ==========================================================
+                    LINKS
+========================================================== */
+
+.bottom-link,
+.forgot-link{
+    color:#2196A3;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.bottom-link:hover,
+.forgot-link:hover{
+    color:#1A7F8B;
+    text-decoration:underline;
+}
+
+/* ==========================================================
+                    CHECKBOX
+========================================================== */
+
+.form-check-input{
+    border-radius:4px;
+}
+
+.form-check-input:checked{
+    background:#2196A3;
+    border-color:#2196A3;
+}
+
+.form-check-label{
+    color:#6B7280;
+    font-size:.9rem;
+}
+
+/* ==========================================================
+                    RESPONSIVE
+========================================================== */
+
+@media(max-width:576px){
+
+    .auth-page{
+        padding:20px;
+    }
+
+    .auth-card{
+        padding:30px 24px;
+    }
+
+    .auth-title{
+        font-size:1.5rem;
+    }
+
+    .brand-logo{
+        font-size:1.6rem;
+    }
+
 }
