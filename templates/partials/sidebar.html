@@ -1,17 +1,22 @@
 <!-- Refactored with semantic <aside> tag -->
 <aside id="main-sidebar">
-    <a href="#" class="sidebar-brand">
+    <a href="{{ url_for('dashboard') }}" class="sidebar-brand">
         <i class="bi bi-mortarboard-fill"></i>
         <span>StudentOS</span>
     </a>
     
     <nav class="sidebar-menu-list">
-        <a href="{{ url_for('dashboard') }}" class="sidebar-link active">
+        <!-- Dynamic highlight for Dashboard -->
+        <a href="{{ url_for('dashboard') }}" class="sidebar-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
             <i class="bi bi-grid-1x2"></i> Dashboard
         </a>
-        <a href="#" class="sidebar-link">
+        
+        <!-- Connected & Dynamic highlight for Assignments Workspace -->
+        <a href="{{ url_for('assignments') }}" class="sidebar-link {% if request.endpoint in ['assignments', 'add_assignment', 'edit_assignment'] %}active{% endif %}">
             <i class="bi bi-book"></i> Assignments
         </a>
+        
+        <!-- Kept placeholders for features built in upcoming phases -->
         <a href="#" class="sidebar-link">
             <i class="bi bi-check-circle"></i> Attendance
         </a>
