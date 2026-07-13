@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center"
+     style="min-height:80vh; background-color:#F6F8FB;">
+
+
+    <div class="auth-card">
+
+
+        <div class="text-center mb-4">
+
+            <h3 class="fw-bold text-dark mb-1">
+                Add Attendance
+            </h3>
+
+            <p class="text-muted small">
+                Add a subject to start tracking attendance.
+            </p>
+
+        </div>
+
+
+
+        <form action="{{ url_for('add_attendance') }}" method="POST">
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Subject Name
+                </label>
+
+                <input
+                    type="text"
+                    name="subject"
+                    class="form-control"
+                    placeholder="e.g. Data Structures"
+                    required>
+
+            </div>
+
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Attended Classes
+                </label>
+
+                <input
+                    type="number"
+                    name="attended_classes"
+                    class="form-control"
+                    placeholder="Number of classes attended"
+                    min="0"
+                    required>
+
+            </div>
+
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Total Classes
+                </label>
+
+                <input
+                    type="number"
+                    name="total_classes"
+                    class="form-control"
+                    placeholder="Total number of classes"
+                    min="1"
+                    required>
+
+            </div>
+
+
+
+
+
+            <div class="d-flex gap-2 mt-4">
+
+
+                <a href="{{ url_for('attendance') }}"
+                   class="btn btn-light w-50 border"
+                   style="border-radius:10px; font-weight:600;">
+
+                    Cancel
+
+                </a>
+
+
+
+
+                <button
+                    type="submit"
+                    class="btn btn-teal w-50">
+
+                    Save Subject
+
+                </button>
+
+
+            </div>
+
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
