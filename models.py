@@ -91,29 +91,21 @@ class Assignment(db.Model):
 
 class Attendance(db.Model):
 
-    id = db.Column(
-        db.Integer,
-        primary_key=True
-    )
+    id = db.Column(db.Integer, primary_key=True)
 
     subject = db.Column(
         db.String(100),
         nullable=False
     )
 
-    classes_held = db.Column(
+    attended_classes = db.Column(
         db.Integer,
-        nullable=False
+        default=0
     )
 
-    classes_attended = db.Column(
+    total_classes = db.Column(
         db.Integer,
-        nullable=False
-    )
-
-    created_at = db.Column(
-        db.DateTime,
-        default=datetime.utcnow
+        default=0
     )
 
     user_id = db.Column(
@@ -121,3 +113,13 @@ class Attendance(db.Model):
         db.ForeignKey("user.id"),
         nullable=False
     )
+
+    @property
+    def attendance_percentage(self):
+
+        if self.total_classes == 0:
+            return 0
+
+        return round(
+            (self.attended_classes / self.total_classes) * 100
+        )

@@ -23,7 +23,7 @@ from flask_login import (
 )
 
 from config import Config
-from models import db, User, Assignment
+from models import db, User, Assignment, Attendance
 
 
 app = Flask(__name__)
@@ -290,11 +290,6 @@ def assignments():
     )
 
 
-
-
-
-
-
 # -------------------------
 # Add Assignment
 # -------------------------
@@ -365,11 +360,6 @@ def add_assignment():
     )
 
 
-
-
-
-
-
 # -------------------------
 # Edit Assignment Page
 # -------------------------
@@ -390,11 +380,6 @@ def edit_assignment(id):
         "edit_assignment.html",
         assignment=assignment
     )
-
-
-
-
-
 
 
 # -------------------------
@@ -445,11 +430,6 @@ def update_assignment(id):
     )
 
 
-
-
-
-
-
 # -------------------------
 # Delete Assignment
 # -------------------------
@@ -482,7 +462,122 @@ def delete_assignment(id):
 
 
 
+# -------------------------
+# Attendance Page
+# -------------------------
+@app.route("/attendance")
+@login_required
+def attendance():
 
+    attendance_records = Attendance.query.filter_by(
+        user_id=current_user.id
+    ).all()
+
+    return render_template(
+        "attendance.html",
+        attendance_records=attendance_records
+    )
+
+
+# -------------------------
+# Add Attendance
+# -------------------------
+@app.route("/attendance/add", methods=["GET", "POST"])
+@login_required
+def add_attendance():
+
+    if request.method == "POST":
+
+        subject = request.form.get("subject")
+
+        attended_classes = int(
+            request.form.get("attended_classes")
+        )
+
+        total_classes = int(
+            request.form.get("total_classes")
+        )
+
+        attendance = Attendance(
+            subject=subject,
+            attended_classes=attended_classes,
+            total_classes=total_classes,
+            user_id=current_user.id
+        )
+
+        db.session.add(attendance)
+        db.session.commit()
+
+        flash("Attendance record added successfully!")
+
+        return redirect(url_for("attendance"))
+
+    return render_template("add_attendance.html")
+
+
+# -------------------------
+# Edit Attendance
+# -------------------------
+@app.route("/attendance/edit/<int:id>", methods=["GET"])
+@login_required
+def edit_attendance(id):
+
+    attendance = Attendance.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    return render_template(
+        "edit_attendance.html",
+        attendance=attendance
+    )
+
+
+# -------------------------
+# Update Attendance
+# -------------------------
+@app.route("/attendance/update/<int:id>", methods=["POST"])
+@login_required
+def update_attendance(id):
+
+    attendance = Attendance.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    attendance.subject = request.form.get("subject")
+    attendance.attended_classes = int(
+        request.form.get("attended_classes")
+    )
+    attendance.total_classes = int(
+        request.form.get("total_classes")
+    )
+
+    db.session.commit()
+
+    flash("Attendance updated successfully!")
+
+    return redirect(url_for("attendance"))
+
+
+# -------------------------
+# Delete Attendance
+# -------------------------
+@app.route("/attendance/delete/<int:id>", methods=["POST"])
+@login_required
+def delete_attendance(id):
+
+    attendance = Attendance.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    db.session.delete(attendance)
+    db.session.commit()
+
+    flash("Attendance deleted successfully!")
+
+    return redirect(url_for("attendance"))
 
 
 
