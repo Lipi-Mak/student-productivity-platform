@@ -12,15 +12,32 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block extra_css %}{% endblock %}
 </head>
+
 <body>
 
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
 
-        <div id="content-space-wrapper">
+        {% for message in messages %}
+        <div class="alert alert-info text-center">
+            {{ message }}
+        </div>
+        {% endfor %}
 
-            <main class="scrollable-content-area">
-                {% block content %}
-                {% endblock %}
-            </main>
+    {% endif %}
+    {% endwith %}
+
+
+    <div class="auth-wrapper">
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+
+</body>
+</main>
 
         </div>
 
