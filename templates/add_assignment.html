@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid d-flex justify-content-center align-items-center"
+     style="min-height: calc(100vh - 80px); background-color:#F6F8FB;">
+
+
+    <div class="auth-card">
+
+
+        <div class="text-center mb-4">
+
+            <h3 class="fw-bold text-dark mb-1">
+                New Assignment
+            </h3>
+
+            <p class="text-muted small">
+                Add assignment details to your study planner.
+            </p>
+
+        </div>
+
+
+
+        <form method="POST" action="{{ url_for('add_assignment') }}">
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Assignment Title
+                </label>
+
+                <input 
+                    type="text"
+                    name="title"
+                    class="form-control"
+                    placeholder="Assignment title"
+                    required>
+
+            </div>
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Subject
+                </label>
+
+                <input 
+                    type="text"
+                    name="subject"
+                    class="form-control"
+                    placeholder="Subject name"
+                    required>
+
+            </div>
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Due Date
+                </label>
+
+                <input 
+                    type="date"
+                    name="due_date"
+                    class="form-control"
+                    required>
+
+            </div>
+
+
+
+            <div class="row g-3">
+
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Priority
+                    </label>
+
+                    <select 
+                        name="priority"
+                        class="form-select"
+                        required>
+
+                        <option value="High">
+                            High
+                        </option>
+
+                        <option value="Medium">
+                            Medium
+                        </option>
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Status
+                    </label>
+
+                    <select 
+                        name="status"
+                        class="form-select"
+                        required>
+
+                        <option value="Pending">
+                            Pending
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="d-flex gap-3 mt-4">
+
+
+                <a href="{{ url_for('assignments') }}"
+                   class="btn btn-light w-50 border">
+
+                    Cancel
+
+                </a>
+
+
+
+                <button 
+                    type="submit"
+                    class="btn btn-teal w-50">
+
+                    Save Assignment
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
