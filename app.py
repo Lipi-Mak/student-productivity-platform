@@ -23,7 +23,7 @@ from flask_login import (
 )
 
 from config import Config
-from models import db, User
+from models import db, User, Assignment
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -129,10 +129,19 @@ def login():
 @login_required
 def dashboard():
 
-    return render_template(
-        "dashboard.html",
-        current_date=datetime.now().strftime("%A, %d %B %Y")
-    )
+    upcoming_assignments = (
+    Assignment.query
+    .filter_by(user_id=current_user.id)
+    .order_by(Assignment.due_date)
+    .limit(3)
+    .all()
+)
+
+return render_template(
+    "dashboard.html",
+    current_date=datetime.now().strftime("%A, %d %B %Y"),
+    upcoming_assignments=upcoming_assignments
+)
 
 
 # -------------------------
@@ -147,6 +156,124 @@ def logout():
     flash("Logged out successfully.")
 
     return redirect(url_for("login"))
+
+# -------------------------
+# Assignments
+# -------------------------
+
+@app.route("/assignments")
+@login_required
+def assignments():
+
+    assignments = Assignment.query.filter_by(
+        user_id=current_user.id
+    ).all()
+
+    return render_template(
+        "assignments.html",
+        assignments=assignments
+    )
+
+
+@app.route("/assignment/add", methods=["GET", "POST"])
+@login_required
+def add_assignment():
+
+    if request.method == "POST":
+
+        title = request.form.get("title")
+        subject = request.form.get("subject")
+        due_date = request.form.get("due_date")
+        priority = request.form.get("priority")
+        status = request.form.get("status")
+
+        due_date = datetime.strptime(
+            due_date,
+            "%Y-%m-%d"
+        ).date()
+
+        new_assignment = Assignment(
+            title=title,
+            subject=subject,
+            due_date=due_date,
+            priority=priority,
+            status=status,
+            user_id=current_user.id
+        )
+
+        db.session.add(new_assignment)
+        db.session.commit()
+
+        flash("Assignment added successfully!")
+
+        return redirect(url_for("assignments"))
+
+    return render_template("add_assignment.html")
+
+
+@app.route("/assignment/edit/<int:id>")
+@login_required
+def edit_assignment(id):
+
+    assignment = Assignment.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    return render_template(
+        "edit_assignment.html",
+        assignment=assignment
+    )
+
+
+@app.route("/assignment/update/<int:id>", methods=["POST"])
+@login_required
+def update_assignment(id):
+
+    assignment = Assignment.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    assignment.title = request.form.get("title")
+    assignment.subject = request.form.get("subject")
+
+    assignment.due_date = datetime.strptime(
+        request.form.get("due_date"),
+        "%Y-%m-%d"
+    ).date()
+
+    assignment.priority = request.form.get("priority")
+    assignment.status = request.form.get("status")
+
+    db.session.commit()
+
+    flash("Assignment updated successfully!")
+
+    return redirect(url_for("assignments"))
+
+
+@app.route("/assignment/delete/<int:id>", methods=["POST"])
+@login_required
+def delete_assignment(id):
+
+    assignment = Assignment.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first()
+
+    if assignment:
+
+        db.session.delete(assignment)
+        db.session.commit()
+
+        flash("Assignment deleted successfully!")
+
+    else:
+
+        flash("Assignment not found.")
+
+    return redirect(url_for("assignments"))
 
 
 # -------------------------
