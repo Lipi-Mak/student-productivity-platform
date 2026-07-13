@@ -4,7 +4,6 @@ from flask import (
     redirect,
     url_for,
     request,
-    session,
     flash
 )
 
@@ -13,11 +12,28 @@ from werkzeug.security import (
     check_password_hash
 )
 
+from flask_login import (
+    LoginManager,
+    login_user,
+    logout_user,
+    login_required,
+    current_user
+)
+
 from config import Config
 from models import db, User
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+login_manager.login_view = "login"
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 db.init_app(app)
 
@@ -30,7 +46,7 @@ with app.app_context():
 # -------------------------
 @app.route("/")
 def home():
-    if "user_id" in session:
+    if current_user.is_authenticated:
         return redirect(url_for("dashboard"))
     return redirect(url_for("login"))
 
@@ -63,7 +79,7 @@ def register():
         new_user = User(
             username=username,
             email=email,
-            password=hashed_password
+            password_hash=hashed_password
         )
 
         db.session.add(new_user)
@@ -89,10 +105,13 @@ def login():
 
         user = User.query.filter_by(email=email).first()
 
-        if user and check_password_hash(user.password, password):
+        if user and check_password_hash(user.password_hash, password):
 
-            session["user_id"] = user.id
-            session["username"] = user.username
+            login_user(user)
+            print("Logged in:", current_user.is_authenticated)
+            print("Current user:", current_user)
+            print("User ID:", current_user.get_id())
+            flash("Login successful!")
 
             return redirect(url_for("dashboard"))
 
@@ -105,10 +124,10 @@ def login():
 # Dashboard
 # -------------------------
 @app.route("/dashboard")
+@login_required
 def dashboard():
-
-    if "user_id" not in session:
-        return redirect(url_for("login"))
+    print(current_user.is_authenticated)
+    print(current_user)
 
     return render_template("dashboard.html")
 
@@ -117,9 +136,10 @@ def dashboard():
 # Logout
 # -------------------------
 @app.route("/logout")
+@login_required
 def logout():
 
-    session.clear()
+    logout_user()
 
     flash("Logged out successfully.")
 
