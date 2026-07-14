@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Study Planner
+            </h2>
+
+            <p class="text-muted mb-0">
+                Plan and organize your study sessions.
+            </p>
+
+        </div>
+
+        <a href="{{ url_for('add_plan') }}"
+           class="btn btn-teal">
+
+            <i class="bi bi-plus-lg me-2"></i>
+
+            Add Study Plan
+
+        </a>
+
+    </div>
+
+
+    {% if plans %}
+
+    <div class="row g-4">
+
+        {% for plan in plans %}
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 class="fw-bold mb-3">
+
+                        {{ plan.subject }}
+
+                    </h5>
+
+                    <p class="mb-2">
+
+                        <strong>Date:</strong>
+
+                        {{ plan.study_date }}
+
+                    </p>
+
+                    <p class="mb-2">
+
+                        <strong>Duration:</strong>
+
+                        {{ plan.duration }} minutes
+
+                    </p>
+
+                    <p class="mb-4">
+
+                        <strong>Status:</strong>
+
+                        {% if plan.completed %}
+
+                        <span class="badge bg-success">
+                            Completed
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-warning text-dark">
+                            Pending
+                        </span>
+
+                        {% endif %}
+
+                    </p>
+
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-auto">
+
+                        <span class="text-muted small">
+                            Study Session
+                        </span>
+
+                        <div class="d-flex gap-2">
+
+                            <a href="{{ url_for('edit_plan', id=plan.id) }}"
+                               class="btn btn-light btn-sm text-secondary border"
+                               style="border-radius:8px;">
+
+                                <i class="bi bi-pencil"></i>
+
+                            </a>
+
+                            <form
+                                action="{{ url_for('delete_plan', id=plan.id) }}"
+                                method="POST"
+                                style="display:inline;">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-light btn-sm text-danger border"
+                                    style="border-radius:8px;"
+                                    onclick="return confirm('Delete this study plan?')">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="text-center py-5 bg-white rounded-4 border">
+
+        <div style="font-size:60px;">
+            📅
+        </div>
+
+        <h4 class="fw-bold mt-3">
+
+            No study plans yet
+
+        </h4>
+
+        <p class="text-muted">
+
+            Click "Add Study Plan" to create your first study session.
+
+        </p>
+
+        <a href="{{ url_for('add_plan') }}"
+           class="btn btn-teal">
+
+            Add Study Plan
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
