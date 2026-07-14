@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <h2 class="mb-4">Edit Link</h2>
+
+    <form
+        action="{{ url_for('update_link', id=link.id) }}"
+        method="POST">
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Website Name
+            </label>
+
+            <input
+                type="text"
+                name="title"
+                class="form-control"
+                value="{{ link.title }}"
+                required>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                URL
+            </label>
+
+            <input
+                type="url"
+                name="url"
+                class="form-control"
+                value="{{ link.url }}"
+                required>
+
+        </div>
+
+        <button class="btn btn-success">
+            Update
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

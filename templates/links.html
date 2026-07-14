@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Important Links</h2>
+
+        <a href="{{ url_for('add_link') }}"
+           class="btn btn-primary">
+            + Add Link
+        </a>
+    </div>
+
+    {% if links %}
+
+    <div class="row">
+
+        {% for link in links %}
+
+        <div class="col-md-6 mb-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5>{{ link.title }}</h5>
+
+                    <p class="text-muted">
+                        {{ link.url }}
+                    </p>
+
+                    <a href="{{ link.url }}"
+                       target="_blank"
+                       class="btn btn-success btn-sm">
+                        Open
+                    </a>
+
+                    <a href="{{ url_for('edit_link', id=link.id) }}"
+                       class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                    <form
+                        action="{{ url_for('delete_link', id=link.id) }}"
+                        method="POST"
+                        class="d-inline">
+
+                        <button class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="text-center mt-5">
+
+        <h1>🔗</h1>
+
+        <h4>No important links added yet.</h4>
+
+        <p>Click "Add Link".</p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
