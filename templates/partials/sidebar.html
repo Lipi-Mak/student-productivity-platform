@@ -1,46 +1,90 @@
-<!-- Refactored with semantic <aside> tag -->
 <aside id="main-sidebar">
+
     <a href="{{ url_for('dashboard') }}" class="sidebar-brand">
         <i class="bi bi-mortarboard-fill"></i>
         <span>StudentOS</span>
     </a>
-    
+
+
     <nav class="sidebar-menu-list">
-        <!-- Dynamic highlight for Dashboard -->
-        <a href="{{ url_for('dashboard') }}" class="sidebar-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
-            <i class="bi bi-grid-1x2"></i> Dashboard
+
+
+        <a href="{{ url_for('dashboard') }}"
+           class="sidebar-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
+            <i class="bi bi-grid-1x2"></i>
+            <span>Dashboard</span>
         </a>
-        
-        <!-- Connected & Dynamic highlight for Assignments Workspace -->
-        <a href="{{ url_for('assignments') }}" class="sidebar-link {% if request.endpoint in ['assignments', 'add_assignment', 'edit_assignment'] %}active{% endif %}">
-            <i class="bi bi-book"></i> Assignments
+
+
+
+        <a href="{{ url_for('assignments') }}"
+           class="sidebar-link {% if request.endpoint in ['assignments', 'add_assignment', 'edit_assignment'] %}active{% endif %}">
+            <i class="bi bi-book"></i>
+            <span>Assignments</span>
         </a>
-        
-        <!-- Kept placeholders for features built in upcoming phases -->
-        <a href="{{ url_for('attendance') }}" class="sidebar-link {% if request.endpoint == 'attendance' %}active{% endif %}">
+
+
+
+        <a href="{{ url_for('attendance') }}"
+           class="sidebar-link {% if request.endpoint in ['attendance', 'add_attendance', 'edit_attendance'] %}active{% endif %}">
             <i class="bi bi-calendar-check"></i>
             <span>Attendance</span>
         </a>
-        <a href="#" class="sidebar-link">
-            <i class="bi bi-calendar3"></i> Timetable
+
+
+
+        <a href="{{ url_for('timetable') }}"
+           class="sidebar-link {% if request.endpoint in ['timetable', 'add_timetable'] %}active{% endif %}">
+            <i class="bi bi-calendar3"></i>
+            <span>Timetable</span>
         </a>
-        <a href="#" class="sidebar-link">
-            <i class="bi bi-journal-text"></i> Notes
+
+
+
+        <a href="{{ url_for('notes') }}"
+           class="sidebar-link {% if request.endpoint in ['notes', 'add_note', 'edit_note'] %}active{% endif %}">
+            <i class="bi bi-journal-text"></i>
+            <span>Notes</span>
         </a>
-        <a href="#" class="sidebar-link">
-            <i class="bi bi-calendar-range"></i> Study Planner
+
+
+
+        <a href="{{ url_for('planner') }}"
+           class="sidebar-link {% if request.endpoint in ['planner', 'add_plan', 'edit_plan'] %}active{% endif %}">
+            <i class="bi bi-calendar-range"></i>
+            <span>Study Planner</span>
         </a>
-        <a href="#" class="sidebar-link">
-            <i class="bi bi-bullseye"></i> Semester Goals
+
+
+
+        <a href="{{ url_for('goals') }}"
+           class="sidebar-link {% if request.endpoint in ['goals', 'add_goal', 'edit_goal'] %}active{% endif %}">
+            <i class="bi bi-bullseye"></i>
+            <span>Semester Goals</span>
         </a>
+
+
+
         <a href="#" class="sidebar-link">
-            <i class="bi bi-calculator"></i> GPA Calculator
+            <i class="bi bi-calculator"></i>
+            <span>GPA Calculator</span>
         </a>
+
+
+
         <a href="#" class="sidebar-link">
-            <i class="bi bi-link-45deg"></i> Important Links
+            <i class="bi bi-link-45deg"></i>
+            <span>Important Links</span>
         </a>
+
+
+
         <a href="#" class="sidebar-link">
-            <i class="bi bi-person-gear"></i> Profile
+            <i class="bi bi-person-gear"></i>
+            <span>Profile</span>
         </a>
+
+
     </nav>
+
 </aside>

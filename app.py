@@ -28,6 +28,7 @@ from models import (
     User,
     Assignment,
     Attendance,
+    Timetable,
     Note,
     StudyPlan,
     Goal
@@ -667,7 +668,7 @@ def goals():
 
     goals = Goal.query.filter_by(
         user_id=current_user.id
-    ).order_by(Goal.created_at.desc()).all()
+    ).order_by(Goal.id.desc()).all()
 
     return render_template(
         "goals.html",
@@ -762,6 +763,141 @@ def delete_goal(id):
     return redirect(url_for("goals"))
 
 
+# -------------------------
+# Timetable
+# -------------------------
+
+@app.route("/timetable")
+@login_required
+def timetable():
+
+    timetable_entries = Timetable.query.filter_by(
+        user_id=current_user.id
+    ).all()
+
+    return render_template(
+        "timetable.html",
+        timetable_entries=timetable_entries
+    )
+
+
+@app.route("/timetable/add", methods=["GET", "POST"])
+@login_required
+def add_timetable():
+
+    if request.method == "POST":
+
+        entry = Timetable(
+
+            subject=request.form.get("subject"),
+
+            day=request.form.get("day"),
+
+            start_time=request.form.get("start_time"),
+
+            end_time=request.form.get("end_time"),
+
+            room=request.form.get("room"),
+
+            user_id=current_user.id
+        )
+
+
+        db.session.add(entry)
+
+        db.session.commit()
+
+
+        flash("Class added successfully!")
+
+        return redirect(
+            url_for("timetable")
+        )
+
+
+    return render_template(
+        "add_timetable.html"
+    )
+
+# -------------------------
+# Edit Timetable
+# -------------------------
+
+@app.route("/timetable/edit/<int:id>")
+@login_required
+def edit_timetable(id):
+
+    entry = Timetable.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+
+    return render_template(
+        "edit_timetable.html",
+        entry=entry
+    )
+
+
+
+# -------------------------
+# Update Timetable
+# -------------------------
+
+@app.route("/timetable/update/<int:id>", methods=["POST"])
+@login_required
+def update_timetable(id):
+
+    entry = Timetable.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+
+    entry.subject = request.form.get("subject")
+    entry.day = request.form.get("day")
+    entry.start_time = request.form.get("start_time")
+    entry.end_time = request.form.get("end_time")
+    entry.room = request.form.get("room")
+
+
+    db.session.commit()
+
+
+    flash("Timetable updated successfully!")
+
+
+    return redirect(
+        url_for("timetable")
+    )
+
+
+
+# -------------------------
+# Delete Timetable
+# -------------------------
+
+@app.route("/timetable/delete/<int:id>", methods=["POST"])
+@login_required
+def delete_timetable(id):
+
+    entry = Timetable.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+
+    db.session.delete(entry)
+
+    db.session.commit()
+
+
+    flash("Class deleted successfully!")
+
+
+    return redirect(
+        url_for("timetable")
+    )
 
 # -------------------------
 # Run App

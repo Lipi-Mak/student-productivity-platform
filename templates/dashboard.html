@@ -29,7 +29,9 @@
         <section class="dashboard-card attendance-card p-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h5 class="m-0 text-dark fw-bold">Attendance Overview</h5>
-                <a href="#" class="text-decoration-none small fw-bold text-teal">View all →</a>
+                <a href="{{ url_for('attendance') }}" class="text-decoration-none small fw-bold text-teal">
+                    View all →
+                </a>
             </div>
             <div class="d-flex flex-column gap-3">
                 <div>
@@ -57,7 +59,6 @@
         <section class="dashboard-card timetable-card p-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h5 class="m-0 text-dark fw-bold">Today's Timetable</h5>
-                <a href="#" class="text-decoration-none small fw-bold text-teal">View all →</a>
             </div>
             <div class="d-flex flex-column gap-3">
                 <div class="ps-3 border-start border-3" style="border-color: #2196A3 !important;">
@@ -78,7 +79,9 @@
         <section class="dashboard-card assignment-card p-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h5 class="m-0 text-dark fw-bold">Upcoming Assignments</h5>
-                <a href="#" class="text-decoration-none small fw-bold text-teal">View all →</a>
+                <a href="{{ url_for('assignments') }}" class="text-decoration-none small fw-bold text-teal">
+                    View all →
+                </a>
             </div>
             <div class="d-flex flex-column gap-3">
                 <div class="p-3 rounded d-flex justify-content-between align-items-center" style="background-color: #F6F8FB; border: 1px solid #E7EDF3;">
@@ -100,10 +103,17 @@
 
         <!-- Study Planner Checklist -->
         <section class="dashboard-card planner-card p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="m-0 text-dark fw-bold">Study Planner Checklist</h5>
-                <i class="bi bi-pencil-square text-secondary" style="cursor: pointer;"></i>
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <h5 class="m-0 text-dark fw-bold">
+                Study Planner Checklist
+            </h5>
+
+            <a href="{{ url_for('planner') }}">
+                <i class="bi bi-pencil-square text-secondary"></i>
+             </a>
+        </div>
+
             <div class="d-flex flex-column gap-2">
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" checked disabled style="background-color: #2196A3; border-color: #2196A3;">
@@ -127,7 +137,10 @@
         <section class="dashboard-card goals-card p-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="m-0 text-dark fw-bold">Semester Goals Tracker</h5>
-                <span class="badge bg-success-subtle text-success px-2 py-1 rounded" style="font-size: 0.7rem; font-weight: 600;">Active</span>
+                <a href="{{ url_for('goals') }}"
+                    class="badge bg-success-subtle text-success text-decoration-none">
+                    View
+                </a>
             </div>
             <p class="text-secondary small mb-3">Target tracking metrics across foundational targets for Year 3 Milestone.</p>
             <div class="mb-3">
@@ -146,7 +159,9 @@
         <section class="dashboard-card notes-card p-4">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <h5 class="m-0 text-dark fw-bold">Quick Notes Pad</h5>
-                <i class="bi bi-pencil small text-secondary"></i>
+                <a href="{{ url_for('notes') }}">
+                    <i class="bi bi-pencil small text-secondary"></i>
+                </a>
             </div>
             <div class="p-3 rounded text-dark" style="background-color: #FFFBEB; border-left: 4px solid #F59E0B;">
                 <div class="fw-bold small mb-1"><i class="bi bi-pin-fill me-1" style="color: #F59E0B;"></i> Exam Notice Desk</div>

@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+
+<div class="d-flex justify-content-center align-items-center"
+     style="min-height:80vh; background-color:#F6F8FB;">
+
+
+
+    <div class="auth-card">
+
+
+
+        <div class="text-center mb-4">
+
+
+            <h3 class="fw-bold text-dark mb-1">
+                Edit Class
+            </h3>
+
+
+            <p class="text-muted small">
+                Update your timetable entry.
+            </p>
+
+
+        </div>
+
+
+
+
+
+
+        <form action="{{ url_for('update_timetable', id=entry.id) }}"
+              method="POST">
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+                    Subject
+                </label>
+
+
+                <input
+                    type="text"
+                    name="subject"
+                    class="form-control"
+                    value="{{ entry.subject }}"
+                    required>
+
+
+            </div>
+
+
+
+
+
+
+
+            <div class="mb-3">
+
+
+                <label class="form-label">
+                    Day
+                </label>
+
+
+
+                <select
+                    name="day"
+                    class="form-control"
+                    required>
+
+
+
+                    <option value="Monday"
+                    {% if entry.day == "Monday" %}selected{% endif %}>
+                        Monday
+                    </option>
+
+
+                    <option value="Tuesday"
+                    {% if entry.day == "Tuesday" %}selected{% endif %}>
+                        Tuesday
+                    </option>
+
+
+                    <option value="Wednesday"
+                    {% if entry.day == "Wednesday" %}selected{% endif %}>
+                        Wednesday
+                    </option>
+
+
+                    <option value="Thursday"
+                    {% if entry.day == "Thursday" %}selected{% endif %}>
+                        Thursday
+                    </option>
+
+
+                    <option value="Friday"
+                    {% if entry.day == "Friday" %}selected{% endif %}>
+                        Friday
+                    </option>
+
+
+                    <option value="Saturday"
+                    {% if entry.day == "Saturday" %}selected{% endif %}>
+                        Saturday
+                    </option>
+
+
+
+                </select>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="row">
+
+
+
+                <div class="col-md-6 mb-3">
+
+
+                    <label class="form-label">
+                        Start Time
+                    </label>
+
+
+                    <input
+                        type="text"
+                        name="start_time"
+                        class="form-control"
+                        value="{{ entry.start_time }}"
+                        required>
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="col-md-6 mb-3">
+
+
+                    <label class="form-label">
+                        End Time
+                    </label>
+
+
+                    <input
+                        type="text"
+                        name="end_time"
+                        class="form-control"
+                        value="{{ entry.end_time }}"
+                        required>
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="mb-4">
+
+
+                <label class="form-label">
+                    Room
+                </label>
+
+
+
+                <input
+                    type="text"
+                    name="room"
+                    class="form-control"
+                    value="{{ entry.room }}">
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <div class="d-flex gap-2">
+
+
+                <a href="{{ url_for('timetable') }}"
+                   class="btn btn-light border w-50">
+
+                    Cancel
+
+                </a>
+
+
+
+
+
+                <button
+                    type="submit"
+                    class="btn btn-teal w-50">
+
+                    Update Class
+
+                </button>
+
+
+
+            </div>
+
+
+
+
+
+
+        </form>
+
+
+
+
+    </div>
+
+
+
+
+</div>
+
+
+
+
+{% endblock %}
