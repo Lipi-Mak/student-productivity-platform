@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center"
+     style="min-height:80vh; background:#F6F8FB;">
+
+    <div class="auth-card">
+
+        <div class="text-center mb-4">
+
+            <h3 class="fw-bold">
+                New Study Plan
+            </h3>
+
+            <p class="text-muted small">
+                Schedule your next study session.
+            </p>
+
+        </div>
+
+        <form action="{{ url_for('add_plan') }}"
+              method="POST">
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Subject
+
+                </label>
+
+                <input
+                    type="text"
+                    name="subject"
+                    class="form-control"
+                    placeholder="Enter subject"
+                    required>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Study Date
+
+                </label>
+
+                <input
+                    type="date"
+                    name="study_date"
+                    class="form-control"
+                    required>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Duration (minutes)
+
+                </label>
+
+                <input
+                    type="number"
+                    name="duration"
+                    class="form-control"
+                    placeholder="Example: 90"
+                    required>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label class="form-label">
+
+                    Status
+
+                </label>
+
+                <select
+                    name="completed"
+                    class="form-select">
+
+                    <option value="False">
+                        Pending
+                    </option>
+
+                    <option value="True">
+                        Completed
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="d-flex gap-2">
+
+                <a href="{{ url_for('planner') }}"
+                   class="btn btn-light border w-50">
+
+                    Cancel
+
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-teal w-50">
+
+                    Save Plan
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
