@@ -44,6 +44,12 @@ class User(UserMixin, db.Model):
         lazy=True
     )
 
+    notes = db.relationship("Note", backref="user", lazy=True)
+
+    study_plans = db.relationship("StudyPlan", backref="user", lazy=True)
+
+    goals = db.relationship("Goal", backref="user", lazy=True)
+
 
 class Assignment(db.Model):
 
@@ -123,3 +129,51 @@ class Attendance(db.Model):
         return round(
             (self.attended_classes / self.total_classes) * 100
         )
+
+class Note(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    title = db.Column(db.String(150), nullable=False)
+
+    content = db.Column(db.Text, nullable=False)
+
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=False
+    )
+
+class StudyPlan(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    subject = db.Column(db.String(100), nullable=False)
+
+    study_date = db.Column(db.Date)
+
+    duration = db.Column(db.Integer)
+
+    completed = db.Column(db.Boolean, default=False)
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=False
+    )
+
+class Goal(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    goal_title = db.Column(db.String(150), nullable=False)
+
+    progress = db.Column(db.Integer, default=0)
+
+    completed = db.Column(db.Boolean, default=False)
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=False
+    )
+
