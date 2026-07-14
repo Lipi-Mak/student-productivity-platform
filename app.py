@@ -28,10 +28,11 @@ from models import (
     User,
     Assignment,
     Attendance,
-    Timetable,
     Note,
     StudyPlan,
-    Goal
+    Goal,
+    ImportantLink,
+    Timetable
 )
 
 app = Flask(__name__)
@@ -158,6 +159,10 @@ def dashboard():
         user_id=current_user.id
     ).order_by(Goal.id.desc()).limit(3).all()
 
+    links = ImportantLink.query.filter_by(
+        user_id=current_user.id
+    ).limit(3).all()
+
     return render_template(
         "dashboard.html",
         current_date=datetime.now().strftime("%A, %d %B %Y"),
@@ -165,7 +170,8 @@ def dashboard():
         attendance_records=attendance_records,
         notes=notes,
         study_plans=study_plans,
-        goals=goals
+        goals=goals,
+        links=links
     )
 
 # -------------------------
@@ -763,6 +769,110 @@ def delete_goal(id):
     return redirect(url_for("goals"))
 
 
+
+# -------------------------
+# Important Links
+# -------------------------
+
+@app.route("/links")
+@login_required
+def links():
+
+    links = ImportantLink.query.filter_by(
+        user_id=current_user.id
+    ).all()
+
+    return render_template(
+        "links.html",
+        links=links
+    )
+
+# -------------------------
+# Add Important Link
+# -------------------------
+
+@app.route("/links/add", methods=["GET", "POST"])
+@login_required
+def add_link():
+
+    if request.method == "POST":
+
+        link = ImportantLink(
+            title=request.form.get("title"),
+            url=request.form.get("url"),
+            user_id=current_user.id
+        )
+
+        db.session.add(link)
+        db.session.commit()
+
+        flash("Link added successfully!")
+
+        return redirect(url_for("links"))
+
+    return render_template("add_link.html")
+
+    # -------------------------
+# Edit Important Link
+# -------------------------
+
+@app.route("/links/edit/<int:id>")
+@login_required
+def edit_link(id):
+
+    link = ImportantLink.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    return render_template(
+        "edit_link.html",
+        link=link
+    )
+
+# -------------------------
+# Update Important Link
+# -------------------------
+
+@app.route("/links/update/<int:id>", methods=["POST"])
+@login_required
+def update_link(id):
+
+    link = ImportantLink.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    link.title = request.form.get("title")
+    link.url = request.form.get("url")
+
+    db.session.commit()
+
+    flash("Link updated successfully!")
+
+    return redirect(url_for("links"))
+
+# -------------------------
+# Delete Important Link
+# -------------------------
+
+@app.route("/links/delete/<int:id>", methods=["POST"])
+@login_required
+def delete_link(id):
+
+    link = ImportantLink.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    db.session.delete(link)
+    db.session.commit()
+
+    flash("Link deleted successfully!")
+
+    return redirect(url_for("links"))
+
+
 # -------------------------
 # Timetable
 # -------------------------
@@ -898,6 +1008,49 @@ def delete_timetable(id):
     return redirect(
         url_for("timetable")
     )
+
+
+# -------------------------
+# Profile
+# -------------------------
+@app.route("/profile")
+@login_required
+def profile():
+
+    assignment_count = Assignment.query.filter_by(
+        user_id=current_user.id
+    ).count()
+
+    attendance_count = Attendance.query.filter_by(
+        user_id=current_user.id
+    ).count()
+
+    note_count = Note.query.filter_by(
+        user_id=current_user.id
+    ).count()
+
+    planner_count = StudyPlan.query.filter_by(
+        user_id=current_user.id
+    ).count()
+
+    goal_count = Goal.query.filter_by(
+        user_id=current_user.id
+    ).count()
+
+    link_count = ImportantLink.query.filter_by(
+        user_id=current_user.id
+    ).count()
+
+    return render_template(
+        "profile.html",
+        assignment_count=assignment_count,
+        attendance_count=attendance_count,
+        note_count=note_count,
+        planner_count=planner_count,
+        goal_count=goal_count,
+        link_count=link_count
+    )
+
 
 # -------------------------
 # Run App

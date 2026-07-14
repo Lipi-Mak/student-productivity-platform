@@ -74,6 +74,12 @@ class User(UserMixin, db.Model):
         lazy=True
     )
 
+    important_links = db.relationship(
+    "ImportantLink",
+    backref="user",
+    lazy=True
+)
+
 
 
 class Assignment(db.Model):
@@ -288,6 +294,25 @@ class Timetable(db.Model):
 
     room = db.Column(
         db.String(50)
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=False
+    )
+
+class ImportantLink(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    title = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+    url = db.Column(
+        db.String(300),
+        nullable=False
     )
 
     user_id = db.Column(
