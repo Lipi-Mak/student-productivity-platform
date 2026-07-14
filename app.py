@@ -23,7 +23,16 @@ from flask_login import (
 )
 
 from config import Config
-from models import db, User, Assignment, Attendance
+from models import (
+    db,
+    User,
+    Assignment,
+    Attendance,
+    Timetable,
+    Note,
+    StudyPlan,
+    Goal
+)
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -129,18 +138,34 @@ def login():
 @login_required
 def dashboard():
 
-    upcoming_assignments = (
-        Assignment.query
-        .filter_by(user_id=current_user.id)
-        .order_by(Assignment.due_date)
-        .limit(3)
-        .all()
-    )
+    assignments = Assignment.query.filter_by(
+        user_id=current_user.id
+    ).order_by(Assignment.due_date.asc()).limit(3).all()
+
+    attendance_records = Attendance.query.filter_by(
+        user_id=current_user.id
+    ).all()
+
+    notes = Note.query.filter_by(
+        user_id=current_user.id
+    ).order_by(Note.created_at.desc()).limit(3).all()
+
+    study_plans = StudyPlan.query.filter_by(
+        user_id=current_user.id
+    ).order_by(StudyPlan.study_date.asc()).limit(3).all()
+
+    goals = Goal.query.filter_by(
+        user_id=current_user.id
+    ).order_by(Goal.id.desc()).limit(3).all()
 
     return render_template(
         "dashboard.html",
         current_date=datetime.now().strftime("%A, %d %B %Y"),
-        upcoming_assignments=upcoming_assignments
+        assignments=assignments,
+        attendance_records=attendance_records,
+        notes=notes,
+        study_plans=study_plans,
+        goals=goals
     )
 
 # -------------------------
@@ -409,6 +434,469 @@ def delete_attendance(id):
 
     return redirect(
         url_for("attendance")
+    )
+
+
+
+
+# -------------------------
+# Notes Page
+# -------------------------
+@app.route("/notes")
+@login_required
+def notes():
+
+    notes = Note.query.filter_by(
+        user_id=current_user.id
+    ).order_by(Note.created_at.desc()).all()
+
+    return render_template(
+        "notes.html",
+        notes=notes
+    )
+
+
+# -------------------------
+# Add Note
+# -------------------------
+@app.route("/notes/add", methods=["GET", "POST"])
+@login_required
+def add_note():
+
+    if request.method == "POST":
+
+        title = request.form.get("title")
+        content = request.form.get("content")
+
+        note = Note(
+            title=title,
+            content=content,
+            user_id=current_user.id
+        )
+
+        db.session.add(note)
+        db.session.commit()
+
+        flash("Note added successfully!")
+
+        return redirect(url_for("notes"))
+
+    return render_template("add_note.html")
+
+
+# -------------------------
+# Edit Note
+# -------------------------
+@app.route("/notes/edit/<int:id>")
+@login_required
+def edit_note(id):
+
+    note = Note.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    return render_template(
+        "edit_note.html",
+        note=note
+    )
+
+
+# -------------------------
+# Update Note
+# -------------------------
+@app.route("/notes/update/<int:id>", methods=["POST"])
+@login_required
+def update_note(id):
+
+    note = Note.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    note.title = request.form.get("title")
+    note.content = request.form.get("content")
+
+    db.session.commit()
+
+    flash("Note updated successfully!")
+
+    return redirect(url_for("notes"))
+
+
+# -------------------------
+# Delete Note
+# -------------------------
+@app.route("/notes/delete/<int:id>", methods=["POST"])
+@login_required
+def delete_note(id):
+
+    note = Note.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    db.session.delete(note)
+    db.session.commit()
+
+    flash("Note deleted successfully!")
+
+    return redirect(url_for("notes"))
+
+
+
+
+# -------------------------
+# Study Planner Page
+# -------------------------
+@app.route("/planner")
+@login_required
+def planner():
+
+    study_plans = StudyPlan.query.filter_by(
+        user_id=current_user.id
+    ).order_by(StudyPlan.study_date.asc()).all()
+
+    return render_template(
+        "planner.html",
+        study_plans=study_plans
+    )
+
+# -------------------------
+# Add Study Plan
+# -------------------------
+@app.route("/planner/add", methods=["GET", "POST"])
+@login_required
+def add_plan():
+
+    if request.method == "POST":
+
+        plan = StudyPlan(
+            subject=request.form.get("subject"),
+            study_date=datetime.strptime(
+                request.form.get("study_date"),
+                "%Y-%m-%d"
+            ).date(),
+            duration=int(request.form.get("duration")),
+            completed=request.form.get("completed") == "on",
+            user_id=current_user.id
+        )
+
+        db.session.add(plan)
+        db.session.commit()
+
+        flash("Study plan added successfully!")
+
+        return redirect(url_for("planner"))
+
+    return render_template("add_plan.html")
+
+
+# -------------------------
+# Edit Study Plan
+# -------------------------
+@app.route("/planner/edit/<int:id>")
+@login_required
+def edit_plan(id):
+
+    plan = StudyPlan.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    return render_template(
+        "edit_plan.html",
+        plan=plan
+    )
+
+
+# -------------------------
+# Update Study Plan
+# -------------------------
+@app.route("/planner/update/<int:id>", methods=["POST"])
+@login_required
+def update_plan(id):
+
+    plan = StudyPlan.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    plan.subject = request.form.get("subject")
+    plan.study_date = datetime.strptime(
+        request.form.get("study_date"),
+        "%Y-%m-%d"
+    ).date()
+    plan.duration = int(request.form.get("duration"))
+    plan.completed = request.form.get("completed") == "on"
+
+    db.session.commit()
+
+    flash("Study plan updated successfully!")
+
+    return redirect(url_for("planner"))
+
+
+# -------------------------
+# Delete Study Plan
+# -------------------------
+@app.route("/planner/delete/<int:id>", methods=["POST"])
+@login_required
+def delete_plan(id):
+
+    plan = StudyPlan.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    db.session.delete(plan)
+    db.session.commit()
+
+    flash("Study plan deleted successfully!")
+
+    return redirect(url_for("planner"))
+
+
+
+
+# -------------------------
+# Goals Page
+# -------------------------
+@app.route("/goals")
+@login_required
+def goals():
+
+    goals = Goal.query.filter_by(
+        user_id=current_user.id
+    ).order_by(Goal.id.desc()).all()
+
+    return render_template(
+        "goals.html",
+        goals=goals
+    )
+
+
+# -------------------------
+# Add Goal
+# -------------------------
+@app.route("/goals/add", methods=["GET", "POST"])
+@login_required
+def add_goal():
+
+    if request.method == "POST":
+
+        goal = Goal(
+            goal_title=request.form.get("goal_title"),
+            progress=int(request.form.get("progress")),
+            completed=request.form.get("completed") == "on",
+            user_id=current_user.id
+        )
+
+        db.session.add(goal)
+        db.session.commit()
+
+        flash("Goal added successfully!")
+
+        return redirect(url_for("goals"))
+
+    return render_template("add_goal.html")
+
+
+# -------------------------
+# Edit Goal
+# -------------------------
+@app.route("/goals/edit/<int:id>")
+@login_required
+def edit_goal(id):
+
+    goal = Goal.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    return render_template(
+        "edit_goal.html",
+        goal=goal
+    )
+
+
+# -------------------------
+# Update Goal
+# -------------------------
+@app.route("/goals/update/<int:id>", methods=["POST"])
+@login_required
+def update_goal(id):
+
+    goal = Goal.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    goal.goal_title = request.form.get("goal_title")
+    goal.progress = int(request.form.get("progress"))
+    goal.completed = request.form.get("completed") == "on"
+
+    db.session.commit()
+
+    flash("Goal updated successfully!")
+
+    return redirect(url_for("goals"))
+
+
+# -------------------------
+# Delete Goal
+# -------------------------
+@app.route("/goals/delete/<int:id>", methods=["POST"])
+@login_required
+def delete_goal(id):
+
+    goal = Goal.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    db.session.delete(goal)
+    db.session.commit()
+
+    flash("Goal deleted successfully!")
+
+    return redirect(url_for("goals"))
+
+
+# -------------------------
+# Timetable
+# -------------------------
+
+@app.route("/timetable")
+@login_required
+def timetable():
+
+    timetable_entries = Timetable.query.filter_by(
+        user_id=current_user.id
+    ).all()
+
+    return render_template(
+        "timetable.html",
+        timetable_entries=timetable_entries
+    )
+
+
+@app.route("/timetable/add", methods=["GET", "POST"])
+@login_required
+def add_timetable():
+
+    if request.method == "POST":
+
+        entry = Timetable(
+
+            subject=request.form.get("subject"),
+
+            day=request.form.get("day"),
+
+            start_time=request.form.get("start_time"),
+
+            end_time=request.form.get("end_time"),
+
+            room=request.form.get("room"),
+
+            user_id=current_user.id
+        )
+
+
+        db.session.add(entry)
+
+        db.session.commit()
+
+
+        flash("Class added successfully!")
+
+        return redirect(
+            url_for("timetable")
+        )
+
+
+    return render_template(
+        "add_timetable.html"
+    )
+
+# -------------------------
+# Edit Timetable
+# -------------------------
+
+@app.route("/timetable/edit/<int:id>")
+@login_required
+def edit_timetable(id):
+
+    entry = Timetable.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+
+    return render_template(
+        "edit_timetable.html",
+        entry=entry
+    )
+
+
+
+# -------------------------
+# Update Timetable
+# -------------------------
+
+@app.route("/timetable/update/<int:id>", methods=["POST"])
+@login_required
+def update_timetable(id):
+
+    entry = Timetable.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+
+    entry.subject = request.form.get("subject")
+    entry.day = request.form.get("day")
+    entry.start_time = request.form.get("start_time")
+    entry.end_time = request.form.get("end_time")
+    entry.room = request.form.get("room")
+
+
+    db.session.commit()
+
+
+    flash("Timetable updated successfully!")
+
+
+    return redirect(
+        url_for("timetable")
+    )
+
+
+
+# -------------------------
+# Delete Timetable
+# -------------------------
+
+@app.route("/timetable/delete/<int:id>", methods=["POST"])
+@login_required
+def delete_timetable(id):
+
+    entry = Timetable.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+
+    db.session.delete(entry)
+
+    db.session.commit()
+
+
+    flash("Class deleted successfully!")
+
+
+    return redirect(
+        url_for("timetable")
     )
 
 # -------------------------

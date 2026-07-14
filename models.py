@@ -3,12 +3,17 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
+
 db = SQLAlchemy()
+
 
 
 class User(UserMixin, db.Model):
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
     username = db.Column(
         db.String(100),
@@ -32,6 +37,7 @@ class User(UserMixin, db.Model):
         default=datetime.utcnow
     )
 
+
     assignments = db.relationship(
         "Assignment",
         backref="user",
@@ -43,6 +49,31 @@ class User(UserMixin, db.Model):
         backref="user",
         lazy=True
     )
+
+    notes = db.relationship(
+        "Note",
+        backref="user",
+        lazy=True
+    )
+
+    study_plans = db.relationship(
+        "StudyPlan",
+        backref="user",
+        lazy=True
+    )
+
+    goals = db.relationship(
+        "Goal",
+        backref="user",
+        lazy=True
+    )
+
+    timetables = db.relationship(
+        "Timetable",
+        backref="user",
+        lazy=True
+    )
+
 
 
 class Assignment(db.Model):
@@ -89,9 +120,13 @@ class Assignment(db.Model):
     )
 
 
+
 class Attendance(db.Model):
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
     subject = db.Column(
         db.String(100),
@@ -114,6 +149,7 @@ class Attendance(db.Model):
         nullable=False
     )
 
+
     @property
     def attendance_percentage(self):
 
@@ -123,3 +159,139 @@ class Attendance(db.Model):
         return round(
             (self.attended_classes / self.total_classes) * 100
         )
+
+
+
+class Note(db.Model):
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    title = db.Column(
+        db.String(150),
+        nullable=False
+    )
+
+    content = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=False
+    )
+
+
+
+class StudyPlan(db.Model):
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    subject = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+    study_date = db.Column(
+        db.Date
+    )
+
+    duration = db.Column(
+        db.Integer
+    )
+
+    completed = db.Column(
+        db.Boolean,
+        default=False
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=False
+    )
+
+
+
+class Goal(db.Model):
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    goal_title = db.Column(
+        db.String(150),
+        nullable=False
+    )
+
+    progress = db.Column(
+        db.Integer,
+        default=0
+    )
+
+    completed = db.Column(
+        db.Boolean,
+        default=False
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=False
+    )
+
+
+
+# ==========================
+# Timetable Model
+# ==========================
+
+class Timetable(db.Model):
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    subject = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+    day = db.Column(
+        db.String(20),
+        nullable=False
+    )
+
+    start_time = db.Column(
+        db.String(20),
+        nullable=False
+    )
+
+    end_time = db.Column(
+        db.String(20),
+        nullable=False
+    )
+
+    room = db.Column(
+        db.String(50)
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=False
+    )

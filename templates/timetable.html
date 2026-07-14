@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-fluid py-4">
+
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Timetable
+            </h2>
+
+            <p class="text-muted mb-0">
+                Manage your weekly class schedule.
+            </p>
+
+        </div>
+
+
+
+        <a href="{{ url_for('add_timetable') }}"
+           class="btn btn-teal">
+
+            <i class="bi bi-plus-lg me-2"></i>
+            Add Class
+
+        </a>
+
+
+    </div>
+
+
+
+
+
+    {% if timetable_entries %}
+
+
+    <div class="row g-4">
+
+
+        {% for item in timetable_entries %}
+
+
+        <div class="col-md-6 col-lg-4">
+
+
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+
+
+                <div class="card-body d-flex flex-column">
+
+
+                    <h5 class="fw-bold mb-3">
+                        {{ item.subject }}
+                    </h5>
+
+
+
+                    <p class="text-muted mb-2">
+
+                        <i class="bi bi-calendar-event me-2"></i>
+
+                        {{ item.day }}
+
+                    </p>
+
+
+
+
+
+                    <p class="text-muted mb-2">
+
+                        <i class="bi bi-clock me-2"></i>
+
+                        {{ item.start_time }} -
+                        {{ item.end_time }}
+
+                    </p>
+
+
+
+
+
+                    {% if item.room %}
+
+                    <p class="text-muted mb-3">
+
+                        <i class="bi bi-geo-alt me-2"></i>
+
+                        {{ item.room }}
+
+                    </p>
+
+                    {% endif %}
+
+
+
+
+
+                    <div class="d-flex justify-content-between align-items-center border-top pt-3 mt-auto">
+
+
+                        <span class="text-muted small">
+                            Class Schedule
+                        </span>
+
+
+
+
+                        <div class="d-flex gap-2">
+
+
+
+                            <a href="{{ url_for('edit_timetable', id=item.id) }}"
+                               class="btn btn-light btn-sm border text-secondary"
+                               style="border-radius:8px;">
+
+                                <i class="bi bi-pencil"></i>
+
+                            </a>
+
+
+
+
+
+                            <form action="{{ url_for('delete_timetable', id=item.id) }}"
+                                  method="POST">
+
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-light btn-sm border text-danger"
+                                    style="border-radius:8px;"
+                                    onclick="return confirm('Delete this class?')">
+
+
+                                    <i class="bi bi-trash"></i>
+
+
+                                </button>
+
+
+                            </form>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+
+
+
+    {% else %}
+
+
+
+    <div class="text-center py-5 bg-white rounded-4 border">
+
+
+        <div style="font-size:60px;">
+            📅
+        </div>
+
+
+
+        <h4 class="fw-bold mt-3">
+            No classes added
+        </h4>
+
+
+
+        <p class="text-muted">
+            Add your first timetable entry.
+        </p>
+
+
+
+
+        <a href="{{ url_for('add_timetable') }}"
+           class="btn btn-teal">
+
+
+            Add Class
+
+
+        </a>
+
+
+
+    </div>
+
+
+
+
+    {% endif %}
+
+
+
+</div>
+
+
+{% endblock %}

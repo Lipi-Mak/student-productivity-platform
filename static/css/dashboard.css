@@ -1,20 +1,25 @@
-
-/* Import the Exact Geometric Font matching Image 2 */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
-/* Apply font to all elements globally */
-body, html, .dashboard-grid, h2, h3, h5, span, div, p, a, label, input {
+
+body,
+html,
+.dashboard-grid,
+h2,
+h3,
+h5,
+span,
+div,
+p,
+a,
+label,
+input {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
     letter-spacing: -0.01em;
-
-/* Import Geometric Font to match Image 2 */
-
-body, html, .dashboard-grid, h2, h5, span, div, p, a {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
-
 }
 
+
 /* Base Component Rules */
+
 .dashboard-card {
     background-color: #ffffff;
     border: 1px solid #E7EDF3;
@@ -23,30 +28,32 @@ body, html, .dashboard-grid, h2, h5, span, div, p, a {
 }
 
 
-/* Card Titles Thickness & Sizing */
 .dashboard-card h5 {
     font-weight: 600 !important;
     font-size: 1.05rem !important;
     color: #1F2937 !important;
 }
 
-/* Secondary & Label Text Thickness Adjustments */
-.text-secondary, .text-muted, .small, p {
+
+.text-secondary,
+.text-muted,
+.small,
+p {
     font-weight: 400 !important;
     color: #6B7280 !important;
 }
 
+
 .fw-semibold {
     font-weight: 500 !important;
 }
+
 
 .fw-bold {
     font-weight: 600 !important;
 }
 
 
-origin/main
-/* Rounded Pill Progress Bars matching Image 2 */
 .progress {
     height: 6px !important;
     border-radius: 50px !important;
@@ -54,46 +61,55 @@ origin/main
     overflow: hidden;
 }
 
+
 .progress-bar {
     border-radius: 50px !important;
 }
 
-/* Vibrant Teal/Cyan Gradient on Progress Bars */
+
 .progress-bar[style*="background-color: #2196A3"],
 .progress-bar[style*="background-color: #12A5B5"] {
     background: linear-gradient(90deg, #12A5B5 0%, #17BCCF 100%) !important;
 }
 
+
 .progress-bar[style*="background-color: #F59E0B"] {
     background-color: #FBBF24 !important;
 }
+
 
 .text-teal {
     color: #12A5B5 !important;
 }
 
-.attendance-card { 
-    margin-bottom: 4px; 
+
+.attendance-card {
+    margin-bottom: 4px;
 }
 
-.timetable-card { 
-    padding-top: 1.8rem !important; 
-    padding-bottom: 2.2rem !important; 
+
+.timetable-card {
+    padding-top: 1.8rem !important;
+    padding-bottom: 2.2rem !important;
 }
 
-.assignment-card { 
-    margin-bottom: -4px; 
+
+.assignment-card {
+    margin-bottom: -4px;
 }
 
-.planner-card { 
-    padding-bottom: 1.5rem !important; 
+
+.planner-card {
+    padding-bottom: 1.5rem !important;
 }
 
-.goals-card { 
-    padding-bottom: 2.5rem !important; 
+
+.goals-card {
+    padding-bottom: 2.5rem !important;
 }
 
-.notes-card { 
-    padding-top: 1rem !important; 
-    padding-bottom: 1rem !important; 
+
+.notes-card {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
 }
