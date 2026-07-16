@@ -37,6 +37,9 @@ def register():
         email = request.form.get("email")
         password = request.form.get("password")
         confirm_password = request.form.get("confirm_password")
+        university = request.form.get("university")
+        program = request.form.get("program")
+        semester = request.form.get("semester")
 
         if password != confirm_password:
             flash("Passwords do not match.")
@@ -48,7 +51,14 @@ def register():
             return redirect(url_for("register"))
 
         hashed_password = generate_password_hash(password)
-        new_user = User(username=username, email=email, password_hash=hashed_password)
+        new_user = User(
+            username=username,
+            email=email,
+            password_hash=hashed_password,
+            university=university,
+            program=program,
+            semester=semester
+        )
         db.session.add(new_user)
         db.session.commit()
 
@@ -65,8 +75,10 @@ def login():
 
         user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password_hash, password):
-            login_user(user)
-            flash("Login successful!")
+            remember = request.form.get("remember") == "on"
+
+            login_user(user, remember=remember)
+
             return redirect(url_for("dashboard"))
 
         flash("Invalid email or password.")
@@ -89,7 +101,13 @@ def dashboard():
     assignments = Assignment.query.filter_by(user_id=current_user.id).order_by(Assignment.due_date.asc()).limit(3).all()
     attendance_records = Attendance.query.filter_by(user_id=current_user.id).all()
     notes = Note.query.filter_by(user_id=current_user.id).order_by(Note.created_at.desc()).all()
-    study_plans = StudyPlan.query.filter_by(user_id=current_user.id).order_by(StudyPlan.study_date.asc()).all()
+    study_plans = (
+    StudyPlan.query
+    .filter_by(user_id=current_user.id)
+    .order_by(StudyPlan.study_date.asc())
+    .limit(2)
+    .all()
+)
     goals = Goal.query.filter_by(user_id=current_user.id).order_by(Goal.id.desc()).limit(3).all()
     links = ImportantLink.query.filter_by(user_id=current_user.id).limit(3).all()
     timetable_entries = Timetable.query.filter_by(user_id=current_user.id).all()
@@ -175,15 +193,26 @@ def attendance():
 @login_required
 def add_attendance():
     if request.method == "POST":
+
+        attended = int(request.form.get("attended_classes"))
+        total = int(request.form.get("total_classes"))
+
+        if attended > total:
+            flash("Attended classes cannot be greater than total classes.")
+            return redirect(url_for("add_attendance"))
+
         new_record = Attendance(
             subject=request.form.get("subject"),
-            attended_classes=int(request.form.get("attended_classes")),
-            total_classes=int(request.form.get("total_classes")),
+            attended_classes=attended,
+            total_classes=total,
             user_id=current_user.id
-        )
+    )
+
         db.session.add(new_record)
         db.session.commit()
+
         flash("Attendance added successfully!")
+
         return redirect(url_for("attendance"))
     return render_template("add_attendance.html")
 
@@ -196,12 +225,27 @@ def edit_attendance(id):
 @app.route("/attendance/update/<int:id>", methods=["POST"])
 @login_required
 def update_attendance(id):
-    record = Attendance.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+
+    record = Attendance.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    attended = int(request.form.get("attended_classes"))
+    total = int(request.form.get("total_classes"))
+
+    if attended > total:
+        flash("Attended classes cannot be greater than total classes.")
+        return redirect(url_for("edit_attendance", id=id))
+
     record.subject = request.form.get("subject")
-    record.attended_classes = int(request.form.get("attended_classes"))
-    record.total_classes = int(request.form.get("total_classes"))
+    record.attended_classes = attended
+    record.total_classes = total
+
     db.session.commit()
+
     flash("Attendance updated successfully!")
+
     return redirect(url_for("attendance"))
 
 @app.route("/attendance/delete/<int:id>", methods=["POST"])
@@ -376,18 +420,69 @@ def goals():
 @app.route("/goals/add", methods=["GET", "POST"])
 @login_required
 def add_goal():
+
     if request.method == "POST":
+
+        completed = request.form.get("completed") == "True"
+
+        if completed:
+            progress = 100
+        else:
+            progress = min(int(request.form.get("progress")), 99)
+
         goal = Goal(
             goal_title=request.form.get("goal_title"),
-            progress=int(request.form.get("progress")),
-            completed=request.form.get("completed") == "on",
+            progress=progress,
+            completed=completed,
             user_id=current_user.id
         )
+
         db.session.add(goal)
         db.session.commit()
+
         flash("Goal added successfully!")
         return redirect(url_for("goals"))
+
     return render_template("add_goal.html")
+
+@app.route("/goals/edit/<int:id>")
+@login_required
+def edit_goal(id):
+
+    goal = Goal.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    return render_template(
+        "edit_goal.html",
+        goal=goal
+    )
+
+@app.route("/goals/update/<int:id>", methods=["POST"])
+@login_required
+def update_goal(id):
+
+    goal = Goal.query.filter_by(
+        id=id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    completed = request.form.get("completed") == "True"
+
+    if completed:
+        progress = 100
+    else:
+        progress = min(int(request.form.get("progress")), 99)
+
+    goal.goal_title = request.form.get("goal_title")
+    goal.progress = progress
+    goal.completed = completed
+
+    db.session.commit()
+
+    flash("Goal updated successfully!")
+    return redirect(url_for("goals"))
 
 @app.route("/goals/delete/<int:id>", methods=["POST"])
 @login_required
@@ -473,21 +568,36 @@ def delete_timetable(id):
     flash("Class deleted successfully!")
     return redirect(url_for("timetable"))
 
+
+
 # -------------------------
 # Profile Module
 # -------------------------
 @app.route("/profile")
 @login_required
 def profile():
-    return render_template(
-        "profile.html",
-        assignment_count=Assignment.query.filter_by(user_id=current_user.id).count(),
-        attendance_count=Attendance.query.filter_by(user_id=current_user.id).count(),
-        note_count=Note.query.filter_by(user_id=current_user.id).count(),
-        planner_count=StudyPlan.query.filter_by(user_id=current_user.id).count(),
-        goal_count=Goal.query.filter_by(user_id=current_user.id).count(),
-        link_count=ImportantLink.query.filter_by(user_id=current_user.id).count()
-    )
+    return render_template("profile.html")
+
+@app.route("/profile/edit")
+@login_required
+def edit_profile():
+    return render_template("edit_profile.html")
+
+@app.route("/profile/update", methods=["POST"])
+@login_required
+def update_profile():
+
+    current_user.username = request.form.get("username")
+    current_user.university = request.form.get("university")
+    current_user.program = request.form.get("program")
+    current_user.semester = request.form.get("semester")
+
+    db.session.commit()
+
+    flash("Profile updated successfully!")
+
+    return redirect(url_for("profile"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

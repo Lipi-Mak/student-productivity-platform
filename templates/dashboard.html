@@ -1,184 +1,500 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-<!-- Welcome Header Banner Layout -->
-<div class="bg-white p-4 mb-4 d-flex justify-content-between align-items-center" style="border: 1px solid #E7EDF3; border-radius: 8px;">
+
+<!-- =======================
+WELCOME BANNER
+======================= -->
+
+<div class="bg-white p-3 mb-4 d-flex justify-content-between align-items-center"
+     style="border:1px solid #E7EDF3; border-radius:12px;">
+
     <div>
-        <h2 class="mb-1 fw-bold text-dark" style="font-size: 1.75rem;">Good Morning, {{ current_user.username }}</h2>
-        <p class="text-muted mb-0">"The secret of getting ahead is getting started."</p>
+        <h2 class="fw-bold mb-1" style="color:#243746;">
+            Good Morning, {{ current_user.username }}
+        </h2>
+
+        <p class="text-muted mb-0">
+            "The secret of getting ahead is getting started."
+        </p>
     </div>
+
     <div class="text-end">
-        <div class="text-muted small mb-1">{{ current_date }}</div>
-        <span class="badge border text-dark bg-white p-2">
-            <span style="color: #12A5B5;">📅</span> Term Autumn-26
+
+        <div class="text-muted small mb-2">
+            {{ current_date }}
+        </div>
+
+        <span class="badge border bg-white text-dark px-3 py-2">
+            <i class="bi bi-calendar-event text-teal me-1"></i>
+            Autumn 2026
         </span>
+
     </div>
+
 </div>
 
-<!-- 3-Column Visual Layout Layout -->
 <div class="row g-4">
-    
-    <!-- COLUMN 1: Attendance Overview & Today's Timetable -->
-    <div class="col-md-4">
-        <div class="card bg-white p-4 mb-4" style="border: 1px solid #E7EDF3; border-radius: 8px; min-height: 200px;">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold text-dark mb-0" style="font-size: 1.1rem;">Attendance Overview</h5>
-                <a href="{{ url_for('attendance') }}" class="text-decoration-none small" style="color: #12A5B5;">View all →</a>
-            </div>
-            {% if attendance_records %}
-                {% for record in attendance_records %}
-                <div class="mb-2 text-dark small">📌 {{ record.subject }}: {{ record.attended_classes }}/{{ record.total_classes }}</div>
-                {% endfor %}
-            {% else %}
-                <div class="text-muted small mt-2">No attendance records added.</div>
-            {% endif %}
-        </div>
 
-        <div class="card bg-white p-4" style="border: 1px solid #E7EDF3; border-radius: 8px; min-height: 200px;">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold text-dark mb-0" style="font-size: 1.1rem;">Today's Timetable</h5>
-                <a href="{{ url_for('timetable') }}" class="text-secondary"><i class="bi bi-pencil-square"></i></a>
-            </div>
-            {% if timetable_entries %}
-                {% for entry in timetable_entries %}
-                <div class="text-dark small mb-2">🕒 <strong>{{ entry.subject }}</strong> ({{ entry.start_time }} - {{ entry.end_time }}) {% if entry.room %}<span class="text-muted">[{# entry.room #}]</span>{% endif %}</div>
-                {% endfor %}
-            {% else %}
-                <div class="text-muted small mt-2">No timetable added.</div>
-            {% endif %}
-        </div>
+<!-- ==========================
+COLUMN 1
+========================== -->
+
+<div class="col-lg-4">
+
+<!-- Attendance -->
+
+<div class="card bg-white p-3 mb-4"
+     style="border:1px solid #E7EDF3;
+            border-radius:12px;
+            height:240px;
+            overflow-y:auto;">
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+
+        <h5 class="fw-semibold mb-0"
+            style="color:#2F4858;">
+            Attendance Overview
+        </h5>
+
+        <a href="{{ url_for('attendance') }}"
+           class="small text-decoration-none"
+           style="color:#12A5B5;">
+            View all →
+        </a>
+
     </div>
 
-    <!-- COLUMN 2: Upcoming Assignments & Study Planner Checklist -->
-    <div class="col-md-4">
-        <div class="card bg-white p-4 mb-4" style="border: 1px solid #E7EDF3; border-radius: 8px; min-height: 200px;">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold text-dark mb-0" style="font-size: 1.1rem;">Upcoming Assignments</h5>
-                <a href="{{ url_for('assignments') }}" class="text-decoration-none small" style="color: #12A5B5;">View all →</a>
-            </div>
-            {% if assignments %}
-                {% for assignment in assignments %}
-                <div class="text-dark small mb-2">📝 {{ assignment.title }} - <span class="text-muted">{{ assignment.due_date.strftime('%d %b') }}</span></div>
-                {% endfor %}
-            {% else %}
-                <div class="text-muted small mt-2">No assignments added.</div>
-            {% endif %}
+    {% if attendance_records %}
+
+        {% for record in attendance_records[:4] %}
+
+        <div class="small mb-1">
+
+            <i class="bi bi-book me-2 text-teal"></i>
+
+            <strong>{{ record.subject }}</strong>
+
+            <span class="text-muted">
+                {{ record.attended_classes }}/{{ record.total_classes }}
+            </span>
+
         </div>
 
-        <!-- Study Planner Checklist (Exact Matching UI Design layout) -->
-        <div class="card bg-white p-4" style="border: 1px solid #E7EDF3; border-radius: 8px; min-height: 200px;">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold text-dark mb-0" style="font-size: 1.1rem;">Study Planner Checklist</h5>
-                <a href="{{ url_for('planner') }}" class="text-secondary"><i class="bi bi-pencil-square"></i></a>
-            </div>
+        {% endfor %}
 
-            <!-- Inline Add Form UI Container Grid Block from original layout view -->
-            <form action="{{ url_for('quick_add_dashboard') }}" method="POST" class="d-flex gap-2 mb-3">
-                <input type="text" name="subject" class="form-control form-control-sm text-secondary" placeholder="New task name..." required style="background: #F6F8FB; border: 1px solid #E7EDF3; border-radius: 6px;">
-                <input type="number" name="duration" class="form-control form-control-sm text-secondary text-center" placeholder="30" style="width: 60px; background: #F6F8FB; border: 1px solid #E7EDF3; border-radius: 6px;" min="5" value="30">
-                <button type="submit" class="btn btn-sm text-white" style="background: #12A5B5; border-radius: 6px; font-weight: 600; padding: 0.25rem 1rem;">Add</button>
-            </form>
+    {% else %}
 
-            <div class="d-flex flex-column gap-2">
-                {% if study_plans %}
-                    {% for plan in study_plans %}
-                    <div class="d-flex align-items-center justify-content-between dashboard-task-row p-2 rounded" data-id="{{ plan.id }}" title="Double click item line row to delete" style="user-select: none; background: #F6F8FB; border: 1px solid #E7EDF3;">
-                        <div class="form-check d-flex align-items-center gap-2 mb-0">
-                            <input class="form-check-input mt-0 task-checkbox" type="checkbox" data-id="{{ plan.id }}" {% if plan.completed %}checked{% endif %} style="cursor: pointer;">
-                            <label class="form-check-label small text-dark {% if plan.completed %}text-decoration-line-through text-muted{% endif %}" id="label-{{ plan.id }}">
-                                {{ plan.subject }} ({{ plan.duration }} mins)
-                            </label>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="text-muted small mt-2 text-center">No study plans added.</div>
-                {% endif %}
-            </div>
+        <div class="text-muted small">
+            No attendance records added.
         </div>
+
+    {% endif %}
+
+</div>
+
+<!-- Today's Timetable -->
+
+<div class="card bg-white p-3"
+     style="border:1px solid #E7EDF3;
+            border-radius:12px;
+            height:240px;
+            overflow-y:auto;">
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+
+        <h5 class="fw-semibold mb-0"
+            style="color:#2F4858;">
+            Today's Timetable
+        </h5>
+
+        <a href="{{ url_for('timetable') }}"
+           class="text-secondary">
+
+            <i class="bi bi-pencil-square"></i>
+
+        </a>
+
     </div>
 
-    <!-- COLUMN 3: Semester Goals Tracker & Quick Notes -->
-    <div class="col-md-4">
-        <div class="card bg-white p-4 mb-4" style="border: 1px solid #E7EDF3; border-radius: 8px; min-height: 200px;">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold text-dark mb-0" style="font-size: 1.1rem;">Semester Goals Tracker</h5>
-                <a href="{{ url_for('goals') }}" class="btn btn-sm btn-light py-0 px-2 text-muted" style="border: 1px solid #E7EDF3; font-size: 0.8rem;">View</a>
-            </div>
-            {% if goals %}
-                {% for goal in goals %}
-                <div class="text-dark small mb-2">🎯 {{ goal.goal_title }} ({{ goal.progress }}%)</div>
-                {% endfor %}
-            {% else %}
-                <div class="text-muted small mt-2">No goals added.</div>
-            {% endif %}
+    {% if timetable_entries %}
+
+        {% for entry in timetable_entries %}
+
+        <div class="small mb-1">
+
+            <i class="bi bi-clock me-2 text-teal"></i>
+
+            <strong>{{ entry.subject }}</strong>
+
+            <span class="text-muted">
+
+                {{ entry.start_time }}
+                -
+                {{ entry.end_time }}
+
+                {% if entry.room %}
+                    • {{ entry.room }}
+                {% endif %}
+
+            </span>
+
         </div>
 
-        <div class="card bg-white p-4" style="border: 1px solid #E7EDF3; border-radius: 8px; min-height: 200px;">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold text-dark mb-0" style="font-size: 1.1rem;">Quick Notes</h5>
-                <a href="{{ url_for('notes') }}" class="text-secondary"><i class="bi bi-pencil-square"></i></a>
+        {% endfor %}
+
+    {% else %}
+
+        <div class="text-muted small">
+            No timetable added.
+        </div>
+
+    {% endif %}
+
+</div>
+
+</div>
+<!-- ==========================
+COLUMN 2
+========================== -->
+
+<div class="col-lg-4">
+
+    <!-- Upcoming Assignments -->
+
+    <div class="card bg-white p-3 mb-4"
+         style="border:1px solid #E7EDF3;
+                border-radius:12px;
+                height:240px;
+                overflow-y:auto;">
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+
+            <h5 class="fw-semibold mb-0"
+                style="color:#2F4858;">
+                Upcoming Assignments
+            </h5>
+
+            <a href="{{ url_for('assignments') }}"
+               class="small text-decoration-none"
+               style="color:#12A5B5;">
+                View all →
+            </a>
+
+        </div>
+
+        {% if assignments %}
+
+            {% for assignment in assignments[:3] %}
+
+            <div class="small mb-1">
+
+                <i class="bi bi-journal-check me-2 text-teal"></i>
+
+                <strong>{{ assignment.title }}</strong>
+
+                <span class="text-muted">
+                    • {{ assignment.due_date.strftime('%d %b') }}
+                </span>
+
             </div>
-            {% set initial_note_content = "" %}
-            {% for note in notes %}
-                {% if note.title == "Dashboard Quick Note" %}
-                    {% set initial_note_content = note.content %}
-                {% endif %}
+
             {% endfor %}
-            <textarea id="dashboard-quick-note" class="form-control border-0 p-0 text-secondary small" rows="5" style="resize: none; background: transparent;" placeholder="Jot down details, exam formulas, or quick ideas here...">{{ initial_note_content }}</textarea>
+
+        {% else %}
+
+            <div class="text-muted small">
+                No assignments added.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Study Planner -->
+
+    <div class="card bg-white p-3"
+         style="border:1px solid #E7EDF3;
+                border-radius:12px;
+                height:240px;
+                overflow-y:auto;">
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+
+            <h5 class="fw-semibold mb-0"
+                style="color:#2F4858;">
+                Study Planner Checklist
+            </h5>
+
+            <a href="{{ url_for('planner') }}"
+               class="small text-decoration-none"
+               style="color:#12A5B5;">
+                View full →
+            </a>
+
         </div>
+
+        <form action="{{ url_for('quick_add_dashboard') }}"
+              method="POST"
+              class="d-flex gap-2 mb-3">
+
+            <input
+                type="text"
+                name="subject"
+                required
+                class="form-control form-control-sm"
+                placeholder="New task">
+
+            <input
+                type="number"
+                name="duration"
+                value="30"
+                min="5"
+                style="width:70px"
+                class="form-control form-control-sm">
+
+            <button
+                type="submit"
+                class="btn btn-sm text-white"
+                style="background:#12A5B5;">
+                Add
+            </button>
+
+        </form>
+
+        {% if study_plans %}
+
+            {% for plan in study_plans[:2] %}
+
+            <div class="dashboard-task-row d-flex align-items-center mb-2"
+                 data-id="{{ plan.id }}">
+
+                <input
+                    type="checkbox"
+                    class="form-check-input me-2 task-checkbox"
+                    data-id="{{ plan.id }}"
+                    {% if plan.completed %}checked{% endif %}>
+
+                <label
+                    id="label-{{ plan.id }}"
+                    class="small {% if plan.completed %}text-decoration-line-through text-muted{% endif %}">
+
+                    {{ plan.subject }}
+
+                    <span class="text-muted">
+                        ({{ plan.duration }} mins)
+                    </span>
+
+                </label>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="text-muted small">
+                No study plans added.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+<!-- ==========================
+COLUMN 3
+========================== -->
+
+<div class="col-lg-4">
+
+    <!-- Semester Goals -->
+
+    <div class="card bg-white p-3 mb-4"
+         style="border:1px solid #E7EDF3;
+                border-radius:12px;
+                height:240px;
+                overflow-y:auto;">
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+
+            <h5 class="fw-semibold mb-0"
+                style="color:#2F4858;">
+                Semester Goals Tracker
+            </h5>
+
+            <a href="{{ url_for('goals') }}"
+               class="small text-decoration-none"
+               style="color:#12A5B5;">
+                View all →
+            </a>
+
+        </div>
+
+        {% if goals %}
+
+            {% for goal in goals[:3] %}
+
+            <div class="small mb-2">
+
+                <i class="bi bi-bullseye me-2 text-teal"></i>
+
+                <strong>{{ goal.goal_title }}</strong>
+
+                {% if goal.completed %}
+                    <span class="badge bg-success ms-2">
+                        Completed
+                    </span>
+                {% else %}
+                    <span class="text-muted">
+                        ({{ goal.progress }}%)
+                    </span>
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="text-muted small">
+                No goals added.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- Quick Notes -->
+
+    <div class="card bg-white p-3"
+         style="border:1px solid #E7EDF3;
+                border-radius:12px;
+                height:240px;
+                overflow-y:auto;">
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+
+            <h5 class="fw-semibold mb-0"
+                style="color:#2F4858;">
+                Quick Notes
+            </h5>
+
+            <a href="{{ url_for('notes') }}"
+               class="small text-decoration-none"
+               style="color:#12A5B5;">
+                View all →
+            </a>
+
+        </div>
+
+        {% if notes %}
+
+            {% for note in notes[:3] %}
+
+            <div class="small mb-2">
+
+                <i class="bi bi-journal-text me-2 text-teal"></i>
+
+                {{ note.title }}
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="text-muted small">
+                No notes added.
+            </div>
+
+        {% endif %}
+
     </div>
 
 </div>
 
-<!-- Real-time Script Pipeline Engine Blocks -->
+</div>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // 1. Interactive Checkboxes Sync Pipeline
-    document.querySelectorAll('.task-checkbox').forEach(box => {
-        box.addEventListener('change', function() {
-            const taskId = this.getAttribute('data-id');
-            const isChecked = this.checked;
-            const targetLabel = document.getElementById(`label-${taskId}`);
-            
-            if (isChecked) {
-                targetLabel.classList.add('text-decoration-line-through', 'text-muted');
-            } else {
-                targetLabel.classList.remove('text-decoration-line-through', 'text-muted');
-            }
-            
-            fetch(`/planner/toggle/${taskId}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ completed: isChecked })
-            });
-        });
-    });
 
-    // 2. Clear Tasks via Row Double Click
-    document.querySelectorAll('.dashboard-task-row').forEach(row => {
-        row.addEventListener('dblclick', function() {
-            const taskId = this.getAttribute('data-id');
-            if (confirm('Delete this task checklist item?')) {
-                fetch(`/planner/delete-inline/${taskId}`, { method: 'POST' })
-                .then(() => this.remove());
-            }
-        });
-    });
-
-    // 3. Auto-Saving Quick Notes Core
-    let noteTimer;
-    const noteArea = document.getElementById('dashboard-quick-note');
-    noteArea.addEventListener('input', function() {
-        clearTimeout(noteTimer);
-        noteTimer = setTimeout(() => {
-            fetch('/notes/quick-update', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ content: noteArea.value })
+    document.addEventListener("DOMContentLoaded", function () {
+    
+        // Toggle planner task
+    
+        document.querySelectorAll(".task-checkbox").forEach(box => {
+    
+            box.addEventListener("change", function () {
+    
+                fetch(`/planner/toggle/${this.dataset.id}`, {
+    
+                    method: "POST",
+    
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+    
+                    body: JSON.stringify({
+                        completed: this.checked
+                    })
+    
+                });
+    
+                const label = document.getElementById(`label-${this.dataset.id}`);
+    
+                if (label) {
+    
+                    if (this.checked) {
+    
+                        label.classList.add(
+                            "text-decoration-line-through",
+                            "text-muted"
+                        );
+    
+                    } else {
+    
+                        label.classList.remove(
+                            "text-decoration-line-through",
+                            "text-muted"
+                        );
+    
+                    }
+    
+                }
+    
             });
-        }, 600);
+    
+        });
+    
+    
+        // Double click to delete planner task
+    
+        document.querySelectorAll(".dashboard-task-row").forEach(row => {
+    
+            row.addEventListener("dblclick", function () {
+    
+                if (confirm("Delete this task?")) {
+    
+                    fetch(`/planner/delete-inline/${this.dataset.id}`, {
+    
+                        method: "POST"
+    
+                    }).then(() => {
+    
+                        this.remove();
+    
+                    });
+    
+                }
+    
+            });
+    
+        });
+    
     });
-});
-</script>
-{% endblock %}
+    
+    </script>
+    
+    {% endblock %}

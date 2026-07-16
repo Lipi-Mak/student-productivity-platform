@@ -44,7 +44,7 @@
         <a href="{{ url_for('notes') }}"
            class="sidebar-link {% if request.endpoint in ['notes', 'add_note', 'edit_note'] %}active{% endif %}">
             <i class="bi bi-journal-text"></i>
-            <span>Notes</span>
+            <span>Quick Notes</span>
         </a>
 
 
@@ -65,24 +65,12 @@
 
 
 
-        <a href="#" class="sidebar-link">
-            <i class="bi bi-calculator"></i>
-            <span>GPA Calculator</span>
-        </a>
-
-
-
-        <a href="#" class="sidebar-link">
+        <a href="{{ url_for('links') }}"
+           class="sidebar-link {% if request.endpoint in ['links', 'add_link', 'edit_link'] %}active{% endif %}">
             <i class="bi bi-link-45deg"></i>
             <span>Important Links</span>
         </a>
 
-
-
-        <a href="#" class="sidebar-link">
-            <i class="bi bi-person-gear"></i>
-            <span>Profile</span>
-        </a>
 
 
     </nav>

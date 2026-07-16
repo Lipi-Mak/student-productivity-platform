@@ -4,124 +4,96 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 {% endblock %}
 
-
 {% block content %}
 
 <div class="d-flex justify-content-center align-items-center"
      style="min-height:80vh; background-color:#F6F8FB;">
 
-
     <div class="auth-card">
 
-
         <div class="text-center mb-4">
-
             <h3 class="fw-bold text-dark mb-1">
-                Add Subject
+                Edit Goal
             </h3>
-        
+
             <p class="text-muted small">
-                Add a subject to start tracking attendance.
+                Update your semester goal.
             </p>
-        
         </div>
 
-
-
-        <form action="{{ url_for('add_attendance') }}" method="POST">
-
+        <form action="{{ url_for('update_goal', id=goal.id) }}" method="POST">
 
             <div class="mb-3">
-
                 <label class="form-label">
-                    Subject Name
+                    Goal Title
                 </label>
 
                 <input
                     type="text"
-                    name="subject"
+                    name="goal_title"
                     class="form-control"
-                    placeholder="e.g. Data Structures"
+                    value="{{ goal.goal_title }}"
                     required>
-
             </div>
 
-
-
-
             <div class="mb-3">
-
                 <label class="form-label">
-                    Attended Classes
+                    Progress (%)
                 </label>
 
                 <input
                     type="number"
-                    name="attended_classes"
+                    name="progress"
                     class="form-control"
-                    placeholder="Number of classes attended"
+                    value="{{ goal.progress }}"
                     min="0"
+                    max="100"
                     required>
-
             </div>
 
-
-
-
-            <div class="mb-3">
+            <div class="mb-4">
 
                 <label class="form-label">
-                    Total Classes
+                    Status
                 </label>
-
-                <input
-                    type="number"
-                    name="total_classes"
-                    class="form-control"
-                    placeholder="Total number of classes"
-                    min="1"
-                    required>
-
+            
+                <select
+                    name="completed"
+                    class="form-select">
+            
+                    <option value="False"
+                    {% if not goal.completed %}selected{% endif %}>
+                        Pending
+                    </option>
+            
+                    <option value="True"
+                    {% if goal.completed %}selected{% endif %}>
+                        Completed
+                    </option>
+            
+                </select>
+            
             </div>
 
+            <div class="d-flex gap-2">
 
-
-
-
-            <div class="d-flex gap-2 mt-4">
-
-
-                <a href="{{ url_for('attendance') }}"
-                   class="btn btn-light w-50 border"
-                   style="border-radius:10px; font-weight:600;">
-
+                <a href="{{ url_for('goals') }}"
+                   class="btn btn-light w-50 border">
                     Cancel
-
                 </a>
-
-
-
 
                 <button
                     type="submit"
                     class="btn btn-teal w-50">
-
-                    Save Subject
-
+                    Update Goal
                 </button>
-
 
             </div>
 
-
-
         </form>
-
 
     </div>
 
-
 </div>
-
 
 {% endblock %}

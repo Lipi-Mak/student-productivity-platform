@@ -37,6 +37,20 @@ class User(UserMixin, db.Model):
         default=datetime.utcnow
     )
 
+    university = db.Column(
+        db.String(150),
+    nullable=False
+    )
+
+    program = db.Column(
+        db.String(150),
+        nullable=False
+    )
+
+    semester = db.Column(
+        db.String(30),
+        nullable=False
+    )
 
     assignments = db.relationship(
         "Assignment",
@@ -80,7 +94,7 @@ class User(UserMixin, db.Model):
     lazy=True
 )
 
-
+print(User.__table__.columns.keys())
 
 class Assignment(db.Model):
 
@@ -182,7 +196,7 @@ class Note(db.Model):
 
     content = db.Column(
         db.Text,
-        nullable=False
+        nullable=True
     )
 
     created_at = db.Column(
@@ -195,8 +209,6 @@ class Note(db.Model):
         db.ForeignKey("user.id"),
         nullable=False
     )
-
-
 
 class StudyPlan(db.Model):
 

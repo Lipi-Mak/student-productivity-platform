@@ -51,7 +51,10 @@
     {% else %}
         <!-- Placeholder graphic matching view layout -->
         <div class="text-center py-5">
-            <div class="mb-3" style="font-size: 3rem;">📅</div>
+            <div class="mb-3" style="font-size: 3rem;"><div class="mb-3">
+                <i class="bi bi-calendar-range"
+                   style="font-size:3.5rem; color:#2196A3;"></i>
+            </div></div>
             <h5 class="fw-bold text-dark mb-1">No study plans yet</h5>
             <p class="text-muted small mb-4">Click "Add Study Plan" to create your first study session.</p>
             <a href="{{ url_for('add_plan') }}" class="btn btn-sm text-white px-4" style="background: #12A5B5; border-radius: 6px;">Add Study Plan</a>

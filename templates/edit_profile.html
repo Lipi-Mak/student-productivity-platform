@@ -4,94 +4,74 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 {% endblock %}
 
-
 {% block content %}
 
 <div class="d-flex justify-content-center align-items-center"
      style="min-height:80vh; background-color:#F6F8FB;">
 
-
     <div class="auth-card">
-
 
         <div class="text-center mb-4">
 
             <h3 class="fw-bold text-dark mb-1">
-                Add Subject
+                Edit Profile
             </h3>
-        
+
             <p class="text-muted small">
-                Add a subject to start tracking attendance.
+                Update your personal information.
             </p>
-        
+
         </div>
 
-
-
-        <form action="{{ url_for('add_attendance') }}" method="POST">
-
+        <form action="{{ url_for('update_profile') }}" method="POST">
 
             <div class="mb-3">
-
-                <label class="form-label">
-                    Subject Name
-                </label>
+                <label class="form-label">Username</label>
 
                 <input
                     type="text"
-                    name="subject"
+                    name="username"
                     class="form-control"
-                    placeholder="e.g. Data Structures"
+                    value="{{ current_user.username }}"
                     required>
-
             </div>
-
-
-
 
             <div class="mb-3">
-
-                <label class="form-label">
-                    Attended Classes
-                </label>
+                <label class="form-label">University</label>
 
                 <input
-                    type="number"
-                    name="attended_classes"
+                    type="text"
+                    name="university"
                     class="form-control"
-                    placeholder="Number of classes attended"
-                    min="0"
+                    value="{{ current_user.university }}"
                     required>
-
             </div>
-
-
-
 
             <div class="mb-3">
-
-                <label class="form-label">
-                    Total Classes
-                </label>
+                <label class="form-label">Program</label>
 
                 <input
-                    type="number"
-                    name="total_classes"
+                    type="text"
+                    name="program"
                     class="form-control"
-                    placeholder="Total number of classes"
-                    min="1"
+                    value="{{ current_user.program }}"
                     required>
-
             </div>
 
+            <div class="mb-3">
+                <label class="form-label">Semester</label>
 
-
-
+                <input
+                    type="text"
+                    name="semester"
+                    class="form-control"
+                    value="{{ current_user.semester }}"
+                    required>
+            </div>
 
             <div class="d-flex gap-2 mt-4">
 
-
-                <a href="{{ url_for('attendance') }}"
+                <a href="{{ url_for('profile') }}"
                    class="btn btn-light w-50 border"
                    style="border-radius:10px; font-weight:600;">
 
@@ -99,29 +79,20 @@
 
                 </a>
 
-
-
-
                 <button
                     type="submit"
                     class="btn btn-teal w-50">
 
-                    Save Subject
+                    Save Changes
 
                 </button>
 
-
             </div>
-
-
 
         </form>
 
-
     </div>
 
-
 </div>
-
 
 {% endblock %}

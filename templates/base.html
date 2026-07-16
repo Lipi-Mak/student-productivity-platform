@@ -23,8 +23,24 @@
             {% include 'partials/navbar.html' %}
 
             <main class="scrollable-content-area">
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-warning alert-dismissible fade show mx-4 mt-3" role="alert">
+                                {{ message }}
+                                <button type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="alert">
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            
                 {% block content %}
                 {% endblock %}
+            
             </main>
 
         </div>
