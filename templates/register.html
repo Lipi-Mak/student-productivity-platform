@@ -141,20 +141,34 @@ Register - StudentOS
 
                 <div class="input-group">
 
-                    <input
-                        type="password"
-                        class="form-control has-password-icon"
-                        name="password"
-                        placeholder="••••••••"
-                        required>
+                    <div class="mb-3">
 
-                    <span class="input-group-text">
-                        <i class="bi bi-eye"></i>
-                    </span>
-
-                </div>
-
-            </div>
+                        <label class="form-label">
+                            Password
+                        </label>
+                    
+                        <div class="input-group">
+                    
+                            <input
+                                type="password"
+                                id="password"
+                                class="form-control has-password-icon"
+                                name="password"
+                                placeholder="••••••••"
+                                required>
+                    
+                            <span
+                                class="input-group-text"
+                                id="togglePassword"
+                                style="cursor:pointer;">
+                    
+                                <i class="bi bi-eye" id="eyeIcon"></i>
+                    
+                            </span>
+                    
+                        </div>
+                    
+                    </div>
 
 
 
@@ -166,20 +180,34 @@ Register - StudentOS
 
                 <div class="input-group">
 
-                    <input
-                        type="password"
-                        class="form-control has-password-icon"
-                        name="confirm_password"
-                        placeholder="••••••••"
-                        required>
+                    <div class="mb-4">
 
-                    <span class="input-group-text">
-                        <i class="bi bi-eye"></i>
-                    </span>
-
-                </div>
-
-            </div>
+                        <label class="form-label">
+                            Confirm Password
+                        </label>
+                    
+                        <div class="input-group">
+                    
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                class="form-control has-password-icon"
+                                name="confirm_password"
+                                placeholder="••••••••"
+                                required>
+                    
+                            <span
+                                class="input-group-text"
+                                id="toggleConfirmPassword"
+                                style="cursor:pointer;">
+                    
+                                <i class="bi bi-eye" id="confirmEyeIcon"></i>
+                    
+                            </span>
+                    
+                        </div>
+                    
+                    </div>
 
 
 
@@ -214,6 +242,50 @@ Register - StudentOS
     </div>
 
 </div>
+<script>
+
+    const password = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+    const eyeIcon = document.getElementById("eyeIcon");
+    
+    togglePassword.addEventListener("click", function () {
+    
+        if (password.type === "password") {
+    
+            password.type = "text";
+            eyeIcon.classList.replace("bi-eye", "bi-eye-slash");
+    
+        } else {
+    
+            password.type = "password";
+            eyeIcon.classList.replace("bi-eye-slash", "bi-eye");
+    
+        }
+    
+    });
+    
+    
+    const confirmPassword = document.getElementById("confirmPassword");
+    const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
+    const confirmEyeIcon = document.getElementById("confirmEyeIcon");
+    
+    toggleConfirmPassword.addEventListener("click", function () {
+    
+        if (confirmPassword.type === "password") {
+    
+            confirmPassword.type = "text";
+            confirmEyeIcon.classList.replace("bi-eye", "bi-eye-slash");
+    
+        } else {
+    
+            confirmPassword.type = "password";
+            confirmEyeIcon.classList.replace("bi-eye-slash", "bi-eye");
+    
+        }
+    
+    });
+    
+    </script>
 
 {% endblock %}
 ```
