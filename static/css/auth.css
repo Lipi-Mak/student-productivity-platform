@@ -9,6 +9,7 @@
     justify-content:center;
     padding:30px;
     background:#F6F8FB;
+    overflow-y:auto;
 }
 
 /* ==========================================================
@@ -21,16 +22,16 @@
     background:#FFFFFF;
     border:1px solid #E7EDF3;
     border-radius:22px;
-    padding:42px;
+    padding:35px;
     box-shadow:0 8px 25px rgba(0,0,0,.04);
 }
 
 .auth-wrapper {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow-y:auto;
 }
 
 /* ==========================================================
@@ -114,10 +115,6 @@
     box-shadow:0 0 0 3px rgba(33,150,163,.15);
 }
 
-.has-password-icon{
-    border-right:none;
-    border-radius:10px 0 0 10px;
-}
 
 .input-group-text{
     background:#FFFFFF;
@@ -204,4 +201,45 @@
         font-size:1.6rem;
     }
 
+}
+
+/* ==========================================================
+                    CONSISTENT INPUT HEIGHT
+========================================================== */
+
+.form-control,
+.form-select {
+    height: 48px;
+    padding: 12px 14px;
+}
+
+
+.input-group {
+    height: 48px;
+}
+
+
+.input-group .form-control {
+    height: 48px;
+    border-right: none;
+}
+
+
+.input-group-text {
+    height: 48px;
+    width: 45px;
+    background:#FFFFFF;
+    border:1px solid #D1D5DB;
+    border-left:none;
+    border-radius:0 10px 10px 0;
+    cursor:pointer;
+    color:#6B7280;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+
+.input-group-text i {
+    font-size:1rem;
 }

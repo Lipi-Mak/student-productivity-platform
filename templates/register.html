@@ -133,84 +133,55 @@ Register - StudentOS
             </div>
 
 
-            <div class="mb-3">
+<!-- Password -->
+<div class="mb-3">
 
-                <label class="form-label">
-                    Password
-                </label>
+    <label class="form-label">
+        Password
+    </label>
 
-                <div class="input-group">
+    <div class="input-group">
 
-                    <div class="mb-3">
+        <input
+            id="password"
+            type="password"
+            class="form-control"
+            name="password"
+            placeholder="••••••••"
+            required>
 
-                        <label class="form-label">
-                            Password
-                        </label>
-                    
-                        <div class="input-group">
-                    
-                            <input
-                                type="password"
-                                id="password"
-                                class="form-control has-password-icon"
-                                name="password"
-                                placeholder="••••••••"
-                                required>
-                    
-                            <span
-                                class="input-group-text"
-                                id="togglePassword"
-                                style="cursor:pointer;">
-                    
-                                <i class="bi bi-eye" id="eyeIcon"></i>
-                    
-                            </span>
-                    
-                        </div>
-                    
-                    </div>
+        <span class="input-group-text" id="togglePassword">
+            <i class="bi bi-eye" id="eyeIcon"></i>
+        </span>
 
+    </div>
 
+</div>
 
-            <div class="mb-4">
+<!-- Confirm Password -->
+<div class="mb-4">
 
-                <label class="form-label">
-                    Confirm Password
-                </label>
+    <label class="form-label">
+        Confirm Password
+    </label>
 
-                <div class="input-group">
+    <div class="input-group">
 
-                    <div class="mb-4">
+        <input
+            id="confirmPassword"
+            type="password"
+            class="form-control"
+            name="confirm_password"
+            placeholder="••••••••"
+            required>
 
-                        <label class="form-label">
-                            Confirm Password
-                        </label>
-                    
-                        <div class="input-group">
-                    
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                class="form-control has-password-icon"
-                                name="confirm_password"
-                                placeholder="••••••••"
-                                required>
-                    
-                            <span
-                                class="input-group-text"
-                                id="toggleConfirmPassword"
-                                style="cursor:pointer;">
-                    
-                                <i class="bi bi-eye" id="confirmEyeIcon"></i>
-                    
-                            </span>
-                    
-                        </div>
-                    
-                    </div>
+        <span class="input-group-text" id="toggleConfirmPassword">
+            <i class="bi bi-eye" id="confirmEyeIcon"></i>
+        </span>
 
+    </div>
 
-
+</div>
             <button
                 type="submit"
                 class="btn btn-teal w-100">
